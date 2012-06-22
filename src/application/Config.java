@@ -11,4 +11,7 @@ public class Config
 {
 	public final static String appname = "Serious Gaming SmartCity prototype";
 	public final static Dimension appsize = new Dimension(1200, 900);
+	public final static int outerBorderSize = 2;
+	
+	
 }

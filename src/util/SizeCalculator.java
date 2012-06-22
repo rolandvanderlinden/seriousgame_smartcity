@@ -72,7 +72,6 @@ public class SizeCalculator
 	/**
 	 * Calculate the size to be used based on the ideal width and height ratio, but only if the holdersize allows it.
 	 * 
-	 * @param minsize
 	 * @param holdersize
 	 * @param ideal_w_ratio
 	 * @param ideal_h_ratio
