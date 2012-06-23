@@ -13,5 +13,7 @@ public class Config
 	public final static Dimension appsize = new Dimension(1200, 900);
 	public final static int outerBorderSize = 2;
 	
-	
+	//Startup data
+	public final static String[] districtNames = {"d1", "d2", "d3"};
+	public final static String dependendDistrictName = districtNames[0]; //TODO pick the correct districtname
 }

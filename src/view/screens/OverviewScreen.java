@@ -2,11 +2,14 @@ package view.screens;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import model.data.District;
 import model.util.VectorF2;
+import util.ComponentUtil;
 import util.LocationCalculator;
 import util.LocationCalculator.LocationType;
 import util.SizeCalculator;
@@ -18,65 +21,63 @@ public class OverviewScreen extends AScreen
 {
 	private JLabel roundLabel;
 	private JButton nextRoundButton, undoRoundButton, previousResultsButton;
-	private DistrictPanel d1panel, d2panel, d3panel;
+	private DistrictPanel[] districtPanels;
 	
-	public OverviewScreen(Dimension size)
+	public OverviewScreen(Dimension size, District[] districts)
 	{
 		super(size);
 		
-		initialize();
+		initialize(districts);
 	}
 	
-	private void initialize()
+	private void initialize(District[] districts)
 	{
 		int width = this.getWidth();
 		int height = this.getHeight();
 		
 		//Sizes
 		VectorF2 holdersize = new VectorF2(width, height);
-		VectorF2 rlabelsize = SizeCalculator.calculateSize(new VectorF2(80, 30), holdersize);
+		VectorF2 rlabelsize = SizeCalculator.calculateSize(new VectorF2(1, 1), holdersize); //size set on text set.
 		VectorF2 nextbuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 30), holdersize);
 		VectorF2 undobuttonsize = SizeCalculator.calculateSize(new VectorF2(170, 30), holdersize);
 		VectorF2 previousbuttonsize = SizeCalculator.calculateSize(new VectorF2(170, 30), holdersize);
 		VectorF2 dpanelsize = SizeCalculator.calculateSize(holdersize, 0.275f, 0.82f);
 		
 		//Locations
-		VectorF2 rlabelpos = LocationCalculator.calculateLocation(rlabelsize, holdersize, LocationType.CENTER, 0.03f);
+		VectorF2 rlabelpos = LocationCalculator.calculateLocation(rlabelsize, holdersize, LocationType.CENTER, 0.03f); //location set on text set
 		VectorF2 nextbuttonpos = LocationCalculator.calculateLocationWithMargins(nextbuttonsize, holdersize, LocationType.END, 0.03f, new VectorF2(18,0));
 		VectorF2 undobuttonpos = LocationCalculator.calculateLocation(undobuttonsize, holdersize, 0.7f, 0.03f);
 		VectorF2 previousbuttonpos = LocationCalculator.calculateLocationWithMargins(previousbuttonsize, holdersize, LocationType.BEGIN, 0.03f, new VectorF2(18,0));
-		VectorF2 d1panelpos = LocationCalculator.calculateLocation(dpanelsize, holdersize, 0.05f, 0.13f);
-		VectorF2 d2panelpos = LocationCalculator.calculateLocation(dpanelsize, holdersize, LocationType.CENTER, 0.13f);
-		VectorF2 d3panelpos = LocationCalculator.calculateLocation(dpanelsize, holdersize, 0.675f, 0.13f);
+		VectorF2[] dispposarray = new VectorF2[districts.length];
+		for(int i = 0; i < districts.length; i++)
+			dispposarray[i] = LocationCalculator.calculateLocation(dpanelsize, holdersize, 0.05f + (i * 0.3125f), 0.13f);
 		
 		//Insert label
 		this.roundLabel = new JLabel();
-		this.setComponentBounds(roundLabel, rlabelsize, rlabelpos);
+		ComponentUtil.setComponentBounds(roundLabel, rlabelsize, rlabelpos);
 		this.roundLabel.setForeground(Color.white);
 		this.roundLabel.setFont(Content.largeFont);
 		this.add(roundLabel);
 		
 		//Insert buttons
 		this.nextRoundButton = new JButton("Next Round");
-		this.setComponentBounds(nextRoundButton, nextbuttonsize, nextbuttonpos);
+		ComponentUtil.setComponentBounds(nextRoundButton, nextbuttonsize, nextbuttonpos);
 		this.add(nextRoundButton);
 		this.undoRoundButton = new JButton("Reset Current Round");
-		this.setComponentBounds(undoRoundButton, undobuttonsize, undobuttonpos);
+		ComponentUtil.setComponentBounds(undoRoundButton, undobuttonsize, undobuttonpos);
 		this.add(undoRoundButton);
 		this.previousResultsButton = new JButton("Previous offer results");
-		this.setComponentBounds(previousResultsButton, previousbuttonsize, previousbuttonpos);
+		ComponentUtil.setComponentBounds(previousResultsButton, previousbuttonsize, previousbuttonpos);
 		this.add(previousResultsButton);
 		
 		//Insert districtpanels
-		this.d1panel = new DistrictPanel();
-		this.setComponentBounds(d1panel, dpanelsize, d1panelpos);
-		this.add(d1panel);
-		this.d2panel = new DistrictPanel();
-		this.setComponentBounds(d2panel, dpanelsize, d2panelpos);
-		this.add(d2panel);
-		this.d3panel = new DistrictPanel();
-		this.setComponentBounds(d3panel, dpanelsize, d3panelpos);
-		this.add(d3panel);
+		this.districtPanels = new DistrictPanel[districts.length];
+		for(int i = 0; i < districts.length; i++)
+		{
+			DistrictPanel dp = new DistrictPanel(new Dimension((int)dpanelsize.x, (int)dpanelsize.y), districts[i]);
+			ComponentUtil.setComponentBounds(dp, dpanelsize, dispposarray[i]);
+			this.add(dp);			
+		}		
 		
 	}
 	
@@ -86,7 +87,17 @@ public class OverviewScreen extends AScreen
 	 */
 	public void setRound(int round)
 	{
+		FontMetrics largeFontMetrics = this.getFontMetrics(Content.largeFont);
+		
+		//Calculate the new size and location of the label based on the text size.
+		String text = "Round " + round;
+		VectorF2 holdersize = new VectorF2(this.getWidth(), this.getHeight());
+		VectorF2 size = SizeCalculator.calculateSize(new VectorF2(largeFontMetrics.stringWidth(text), 30), holdersize);
+		VectorF2 location = LocationCalculator.calculateLocation(size, holdersize, LocationType.CENTER, 0.03f);
+		
+		//Change text and position/location of the label.
 		this.roundLabel.setText("Round " + round);
+		ComponentUtil.setComponentBounds(roundLabel, size, location);
 	}
 	
 }

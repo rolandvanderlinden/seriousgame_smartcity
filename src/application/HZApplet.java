@@ -2,6 +2,8 @@ package application;
 
 import javax.swing.JApplet;
 
+import model.managers.DistrictManager;
+
 import util.Output;
 import view.base.BackgroundPanel;
 import view.screens.AScreen;
@@ -64,7 +66,7 @@ public class HZApplet extends JApplet
 	{
 		this.remove(backgroundPanel);
 		
-		this.mainScreen = new OverviewScreen(backgroundPanel.getSize());
+		this.mainScreen = new OverviewScreen(backgroundPanel.getSize(), DistrictManager.getInstance().getDistricts());
 		this.add(mainScreen);
 		this.add(backgroundPanel);
 		

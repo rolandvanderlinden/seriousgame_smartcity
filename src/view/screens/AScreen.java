@@ -22,11 +22,4 @@ public abstract class AScreen extends JPanel
 		this.setSize(size);
 		this.setOpaque(false);
 	}
-	
-	protected void setComponentBounds(Component component, VectorF2 size, VectorF2 location)
-	{
-		component.setSize((int)size.x, (int)size.y);
-		component.setLocation((int)location.x, (int)location.y);
-	}
-
 }
