@@ -13,6 +13,12 @@ public class District
 		this.name = name;
 	}
 	
+	@Override
+	public int hashCode()
+	{
+		return this.ID;
+	}
+	
 	public int getID()
 	{
 		return ID;
