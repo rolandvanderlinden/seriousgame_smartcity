@@ -36,6 +36,22 @@ public class Product
 		return this.ID;
 	}
 	
+	@Override
+	public String toString()
+	{
+		String result = technology.getName();
+		
+		for(int i = 0; i < improvements.length; i++)
+		{
+			if(i == 0)
+				result += " with " + improvements[i].getName();
+			else
+				result += " and " + improvements[i].getName();
+		}
+		
+		return result;
+	}
+	
 	public int getID()
 	{
 		return this.ID;

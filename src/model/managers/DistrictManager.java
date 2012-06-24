@@ -59,7 +59,7 @@ public class DistrictManager
 	
 	public static ResourceInfo getDistrictResourceInfo(District district)
 	{
-		String imagename = "district-" + district.getName() + ".jpg";
+		String imagename = district.getName() + ".jpg";
 		
 		return new ResourceInfo(imagename, DistrictRef.class);
 	}

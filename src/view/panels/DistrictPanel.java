@@ -91,11 +91,13 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		ComponentUtil.setComponentBounds(roundOfferLabel, roundofferlabelsize, roundofferlabelpos);
 		this.roundOfferLabel.setForeground(Color.white);
 		this.roundOfferLabel.setFont(Content.mediumFont);
+		this.roundOfferLabel.setToolTipText("These are the product offers made in the current round. They will be processed when the round ends.");
 		this.add(roundOfferLabel);
 		this.acceptedOfferLabel = new JLabel(acceptedOfferLabelText);
 		ComponentUtil.setComponentBounds(acceptedOfferLabel, accofferlabelsize, accofferlabelpos);
 		this.acceptedOfferLabel.setForeground(Color.white);
 		this.acceptedOfferLabel.setFont(Content.mediumFont);
+		this.acceptedOfferLabel.setToolTipText("These are the product offers that were accepted in previous rounds.");
 		this.add(acceptedOfferLabel);
 		
 		//Insert buttons
@@ -103,6 +105,7 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		ComponentUtil.setComponentBounds(offerButton, offerbuttonsize, offerbuttonpos);
 		this.offerButton.setActionCommand(DistrictManager.districtOfferActionCommand + district.getID());
 		this.offerButton.addActionListener(actionListener);
+		this.offerButton.setToolTipText("Offer a new product to district " + district.getName() + ".");
 		this.add(offerButton);
 		
 		//Insert image
@@ -113,6 +116,7 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		//Insert happinespanel
 		this.happinessPanel = new HappinessPanel(new Dimension((int)hpanelsize.x, (int)hpanelsize.y));
 		ComponentUtil.setComponentBounds(happinessPanel, hpanelsize, hpanelpos);
+		happinessPanel.setToolTipText("The level of happiness of district " + district.getName() + ".");
 		this.add(happinessPanel);
 		
 		//Insert productoffer panels

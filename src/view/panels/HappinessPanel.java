@@ -5,11 +5,12 @@ import java.awt.Dimension;
 import javax.swing.JPanel;
 
 import view.components.BufferedImageJPanel;
+import view.components.TranslucentBufferedImageJPanel;
 import content.Content;
 
 public class HappinessPanel extends JPanel
 {
-	protected BufferedImageJPanel percentageImage, overlayImage;
+	protected TranslucentBufferedImageJPanel percentageImage, overlayImage;
 	
 	public HappinessPanel(Dimension size)
 	{
@@ -25,10 +26,10 @@ public class HappinessPanel extends JPanel
 		this.setOpaque(false);
 		
 		//Insert images
-		this.overlayImage = new BufferedImageJPanel(Content.happinessOverlay);
+		this.overlayImage = new TranslucentBufferedImageJPanel(Content.happinessOverlay, 1);
 		this.overlayImage.setSize(size);
 		this.add(overlayImage);
-		this.percentageImage = new BufferedImageJPanel(Content.happinessBar);
+		this.percentageImage = new TranslucentBufferedImageJPanel(Content.happinessBar, 0.9f);
 		this.add(percentageImage);
 		
 		//Set size of the bar.

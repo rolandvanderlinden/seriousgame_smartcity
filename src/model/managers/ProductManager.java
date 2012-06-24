@@ -2,9 +2,11 @@ package model.managers;
 
 import model.data.Product;
 import model.data.TechImprovement;
+import model.data.Technology;
 import model.util.ResourceInfo;
-import content.image.ImageRef;
 import content.product.ProductRef;
+import content.techimprovements.TechImprovementRef;
+import content.technology.TechnologyRef;
 
 public class ProductManager
 {
@@ -31,5 +33,19 @@ public class ProductManager
 		name += ".jpg";
 		
 		return new ResourceInfo(name, ProductRef.class);
+	}
+	
+	public static ResourceInfo getTechnologyResourceInfo(Technology technology)
+	{
+		String imageName = technology.getName() + ".jpg";
+		
+		return new ResourceInfo(imageName, TechnologyRef.class);
+	}
+	
+	public static ResourceInfo getTechImprovementResourceInfo(TechImprovement ti)
+	{
+		String imageName = ti.getName() + ".jpg";
+		
+		return new ResourceInfo(imageName, TechImprovementRef.class);
 	}
 }

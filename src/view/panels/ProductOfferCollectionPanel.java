@@ -108,6 +108,7 @@ public class ProductOfferCollectionPanel extends JPanel
 			VectorF2 imagepos = new VectorF2(imageX, imageY + (index * entrysize.y));
 			BufferedImageJPanel productImage = new BufferedImageJPanel(ProductManager.getProductResourceInfo(po.getProduct()));
 			ComponentUtil.setComponentBounds(productImage, imagesize, imagepos);
+			productImage.setToolTipText(po.getProduct().toString());
 			offerPanel.add(productImage);
 			
 			//Insert count label
@@ -115,6 +116,7 @@ public class ProductOfferCollectionPanel extends JPanel
 			JLabel countLabel = new JLabel("" + timesOffered);
 			countLabel.setForeground(Color.white);
 			countLabel.setFont(Content.smallFont);
+			countLabel.setToolTipText("The number of product offers of type " + po.getProduct().toString());
 			ComponentUtil.setComponentBounds(countLabel, countsize, countpos);
 			offerPanel.add(countLabel);
 			
