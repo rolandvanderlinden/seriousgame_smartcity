@@ -12,6 +12,9 @@ import content.district.DistrictRef;
  */
 public class DistrictManager
 {
+	public final static String districtOfferActionCommand = "District offer for ID: ";
+	
+	
 	private static DistrictManager instance;
 	protected District[] districts;
 	

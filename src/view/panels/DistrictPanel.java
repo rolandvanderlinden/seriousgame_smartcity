@@ -3,13 +3,13 @@ package view.panels;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import model.data.District;
 import model.managers.DistrictManager;
-import model.util.ResourceInfo;
 import model.util.VectorF2;
 import util.ComponentUtil;
 import util.LocationCalculator;
@@ -18,7 +18,6 @@ import util.SizeCalculator;
 import view.components.BufferedImageJPanel;
 import view.components.TranslucentBufferedImageJPanel;
 import content.Content;
-import content.image.ImageRef;
 
 public class DistrictPanel extends TranslucentBufferedImageJPanel
 {
@@ -28,18 +27,18 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 	protected JButton offerButton;
 	protected BufferedImageJPanel image;
 	protected HappinessPanel happinessPanel;
-	protected ProductOfferPanel roundOffersPanel, acceptedOffersPanel;
+	protected ProductOfferCollectionPanel roundOffersPanel, acceptedOffersPanel;
 	
-	public DistrictPanel(Dimension size, District district)
+	public DistrictPanel(Dimension size, District district, ActionListener actionListener)
 	{
 		super(Content.black, 0.5f);
 		
 		this.district = district;
 
-		initialize(size);
+		initialize(size, actionListener);
 	}
 	
-	private void initialize(Dimension size)
+	private void initialize(Dimension size, ActionListener actionListener)
 	{
 		int width = size.width;
 		int height = size.height;
@@ -60,7 +59,7 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		VectorF2 hlabelsize = SizeCalculator.calculateSize(new VectorF2(smallFontMetrics.stringWidth(happinessLabelText), 20), holdersize);
 		VectorF2 roundofferlabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(roundOfferLabelText), 30), holdersize);
 		VectorF2 accofferlabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(acceptedOfferLabelText), 30), holdersize);
-		VectorF2 offerbuttonsize = SizeCalculator.calculateSize(new VectorF2(110, 28), holdersize);
+		VectorF2 offerbuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 28), holdersize);
 		VectorF2 imagesize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.18f);
 		VectorF2 hpanelsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.025f);
 		VectorF2 roundofferpanelsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.16f);
@@ -102,6 +101,8 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		//Insert buttons
 		this.offerButton = new JButton("Offer product");
 		ComponentUtil.setComponentBounds(offerButton, offerbuttonsize, offerbuttonpos);
+		this.offerButton.setActionCommand(DistrictManager.districtOfferActionCommand + district.getID());
+		this.offerButton.addActionListener(actionListener);
 		this.add(offerButton);
 		
 		//Insert image
@@ -115,10 +116,10 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		this.add(happinessPanel);
 		
 		//Insert productoffer panels
-		this.roundOffersPanel = new ProductOfferPanel(new Dimension((int)roundofferpanelsize.x, (int)roundofferpanelsize.y));
+		this.roundOffersPanel = new ProductOfferCollectionPanel(new Dimension((int)roundofferpanelsize.x, (int)roundofferpanelsize.y));
 		ComponentUtil.setComponentBounds(roundOffersPanel, roundofferpanelsize, roundofferppos);
 		this.add(roundOffersPanel);
-		this.acceptedOffersPanel = new ProductOfferPanel(new Dimension((int)accofferpanelsize.x, (int)accofferpanelsize.y));
+		this.acceptedOffersPanel = new ProductOfferCollectionPanel(new Dimension((int)accofferpanelsize.x, (int)accofferpanelsize.y));
 		ComponentUtil.setComponentBounds(acceptedOffersPanel, accofferpanelsize, accofferppos);
 		this.add(acceptedOffersPanel);
 	}

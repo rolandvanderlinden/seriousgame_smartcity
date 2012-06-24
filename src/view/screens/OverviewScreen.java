@@ -15,17 +15,23 @@ import util.LocationCalculator.LocationType;
 import util.SizeCalculator;
 import view.panels.DistrictPanel;
 import content.Content;
+import controller.screens.IScreenDisplayController;
+import controller.screens.OverviewController;
 
 
 public class OverviewScreen extends AScreen
 {
+	protected OverviewController overviewController;
+	
 	private JLabel roundLabel;
 	private JButton nextRoundButton, undoRoundButton, previousResultsButton;
 	private DistrictPanel[] districtPanels;
 	
-	public OverviewScreen(Dimension size, District[] districts)
+	public OverviewScreen(Dimension size, IScreenDisplayController screenDisplayController, District[] districts)
 	{
 		super(size);
+		
+		this.overviewController = new OverviewController(screenDisplayController);
 		
 		initialize(districts);
 	}
@@ -74,11 +80,11 @@ public class OverviewScreen extends AScreen
 		this.districtPanels = new DistrictPanel[districts.length];
 		for(int i = 0; i < districts.length; i++)
 		{
-			DistrictPanel dp = new DistrictPanel(new Dimension((int)dpanelsize.x, (int)dpanelsize.y), districts[i]);
+			DistrictPanel dp = new DistrictPanel(new Dimension((int)dpanelsize.x, (int)dpanelsize.y), districts[i], overviewController);
 			ComponentUtil.setComponentBounds(dp, dpanelsize, dispposarray[i]);
+			districtPanels[i] = dp;
 			this.add(dp);			
 		}		
-		
 	}
 	
 	/**

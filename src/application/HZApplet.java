@@ -2,14 +2,17 @@ package application;
 
 import javax.swing.JApplet;
 
-import model.managers.DistrictManager;
+import controller.screens.IScreenDisplayController;
 
+import model.data.District;
+import model.managers.DistrictManager;
 import util.Output;
 import view.base.BackgroundPanel;
 import view.screens.AScreen;
 import view.screens.OverviewScreen;
+import view.screens.ProductOfferScreen;
 
-public class HZApplet extends JApplet
+public class HZApplet extends JApplet implements IScreenDisplayController
 {
 	// **********************************************
 	// Fields
@@ -62,15 +65,42 @@ public class HZApplet extends JApplet
 	// Insert & Remove screens
 	// **********************************************
 	
+	@Override
+	public void removeCurrentScreen()
+	{
+		if(mainScreen != null)
+		{
+			this.remove(mainScreen);
+			this.mainScreen = null;
+		}
+	}
+	
+	@Override
 	public void insertOverviewScreen()
 	{
 		this.remove(backgroundPanel);
 		
-		this.mainScreen = new OverviewScreen(backgroundPanel.getSize(), DistrictManager.getInstance().getDistricts());
+		this.mainScreen = new OverviewScreen(backgroundPanel.getSize(), this, DistrictManager.getInstance().getDistricts());
 		this.add(mainScreen);
 		this.add(backgroundPanel);
 		
+		this.rootPane.revalidate();
+		this.rootPane.repaint();
 	}
+	
+	@Override
+	public void insertProductOfferScreen(District district)
+	{
+		this.remove(backgroundPanel);
+		
+		this.mainScreen = new ProductOfferScreen(backgroundPanel.getSize(), this, district);
+		this.add(mainScreen);
+		this.add(backgroundPanel);
+		
+		this.rootPane.revalidate();
+		this.rootPane.repaint();
+	}
+	
 	
 	// **********************************************
 	// Start & Stop
