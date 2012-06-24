@@ -24,6 +24,9 @@ import controller.screens.ProductOfferController;
 
 public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 {
+	public final static String offerProductActionCommand = "offerproduct";
+	public final static String cancelOfferActionCommand = "canceloffer";
+	
 	protected ProductOfferController productOfferController;
 	protected District district;
 	
@@ -135,12 +138,16 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		//Add buttons
 		this.offerButton = new JButton("Offer product");
 		ComponentUtil.setComponentBounds(offerButton, offerbuttonsize, offerbuttonpos);
+		this.offerButton.addActionListener(productOfferController);
 		this.offerButton.setToolTipText("The selected technology (and improvements) will be the product offer to district " + district.getName() + ".");
+		this.offerButton.setActionCommand(offerProductActionCommand);
 		this.offerButton.setEnabled(false);
 		this.add(offerButton);
 		this.cancelButton = new JButton("Cancel offer");
 		ComponentUtil.setComponentBounds(cancelButton, cancelbuttonsize, cancelbuttonpos);
+		this.cancelButton.addActionListener(productOfferController);
 		this.cancelButton.setToolTipText("The offer will be cancelled. You will return to the overview screen.");
+		this.cancelButton.setActionCommand(cancelOfferActionCommand);
 		this.add(cancelButton);
 	}
 

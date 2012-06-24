@@ -39,7 +39,7 @@ public class ProductOfferScreen extends AScreen
 		VectorF2 popanelsize = SizeCalculator.calculateSize(holdersize, 0.75f, 0.6f);
 		
 		//Locations
-		VectorF2 popanelpos = LocationCalculator.calculateLocation(popanelsize, holdersize, LocationType.CENTER, 0.15f);
+		VectorF2 popanelpos = LocationCalculator.calculateLocation(popanelsize, holdersize, LocationType.CENTER, 0.2f);
 		
 		//Insert product offer panel
 		this.productOfferPanel = new ProductOfferPanel(new Dimension((int)popanelsize.x, (int)popanelsize.y), productOfferController, district);
