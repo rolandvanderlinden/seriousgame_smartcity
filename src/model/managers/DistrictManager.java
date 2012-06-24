@@ -1,7 +1,9 @@
 package model.managers;
 
 import model.data.District;
+import model.util.ResourceInfo;
 import application.Config;
+import content.district.DistrictRef;
 
 /**
  * Singleton district manager.
@@ -50,5 +52,12 @@ public class DistrictManager
 	public District[] getDistricts()
 	{
 		return districts;
+	}
+	
+	public static ResourceInfo getDistrictResourceInfo(District district)
+	{
+		String imagename = "district-" + district.getName() + ".jpg";
+		
+		return new ResourceInfo(imagename, DistrictRef.class);
 	}
 }

@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import model.data.District;
+import model.managers.DistrictManager;
 import model.util.ResourceInfo;
 import model.util.VectorF2;
 import util.ComponentUtil;
@@ -104,7 +105,7 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		this.add(offerButton);
 		
 		//Insert image
-		this.image = new BufferedImageJPanel(new ResourceInfo("district-" + district.getName() + ".jpg", ImageRef.class));
+		this.image = new BufferedImageJPanel(DistrictManager.getDistrictResourceInfo(district));
 		ComponentUtil.setComponentBounds(image, imagesize, imagepos);
 		this.add(image);
 		

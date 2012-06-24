@@ -3,6 +3,7 @@ package model.managers;
 import model.data.Product;
 import model.data.TechImprovement;
 import model.util.ResourceInfo;
+import content.image.ImageRef;
 import content.product.ProductRef;
 
 public class ProductManager
