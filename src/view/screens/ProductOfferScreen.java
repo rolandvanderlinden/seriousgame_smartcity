@@ -36,7 +36,7 @@ public class ProductOfferScreen extends AScreen
 		
 		//Sizes
 		VectorF2 holdersize = new VectorF2(width, height);
-		VectorF2 popanelsize = SizeCalculator.calculateSize(holdersize, 0.75f, 0.75f);
+		VectorF2 popanelsize = SizeCalculator.calculateSize(holdersize, 0.75f, 0.6f);
 		
 		//Locations
 		VectorF2 popanelpos = LocationCalculator.calculateLocation(popanelsize, holdersize, LocationType.CENTER, 0.15f);

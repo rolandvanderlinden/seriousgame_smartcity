@@ -1,5 +1,9 @@
 package model.data;
 
+import java.util.Arrays;
+
+import util.ArrayUtil;
+
 
 public class Product
 {
@@ -28,6 +32,11 @@ public class Product
 	public boolean equals(Product other)
 	{
 		return other.hashCode() == hashCode();
+	}
+	
+	public boolean contentEquals(Technology otherTechology, TechImprovement... otherImprovements)
+	{
+		return technology.equals(otherTechology) && ArrayUtil.containEqualContent(improvements, otherImprovements);
 	}
 	
 	@Override

@@ -13,6 +13,20 @@ public class TechImprovement
 		this.name = name;
 	}
 	
+	@Override
+	public boolean equals(Object other)
+	{
+		if(other instanceof TechImprovement)
+			return equals((TechImprovement)other);
+		else
+			return false;
+	}
+	
+	public boolean equals(TechImprovement other)
+	{
+		return other.getID() == ID;
+	}
+	
 	public int getID()
 	{
 		return this.ID;

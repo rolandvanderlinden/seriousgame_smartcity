@@ -6,6 +6,7 @@ import controller.screens.IScreenDisplayController;
 
 import model.data.District;
 import model.managers.DistrictManager;
+import model.managers.ProductManager;
 import util.Output;
 import view.base.BackgroundPanel;
 import view.screens.AScreen;
@@ -34,7 +35,7 @@ public class HZApplet extends JApplet implements IScreenDisplayController
 		try
 		{
 			Output.show();
-			
+
 			//Create the basic layout of the applet.
 			this.createBasicLayout();
 			
