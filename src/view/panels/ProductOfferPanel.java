@@ -52,7 +52,7 @@ public class ProductOfferPanel extends JPanel
 		testmap.put(new ProductOffer(new Product(1, new Technology(0, "tech1")), new District(1, "test")), new Integer(2));
 		testmap.put(new ProductOffer(new Product(2, new Technology(0, "tech1")), new District(2, "test")), new Integer(1));
 		testmap.put(new ProductOffer(new Product(3, new Technology(0, "tech1")), new District(3, "test")), new Integer(3));
-		testmap.put(new ProductOffer(new Product(4, new Technology(0, "tech1")), new District(4, "test")), new Integer(1));
+		testmap.put(new ProductOffer(new Product(4, new Technology(0, "tech2")), new District(4, "test")), new Integer(1));
 		testmap.put(new ProductOffer(new Product(5, new Technology(0, "tech1")), new District(5, "test")), new Integer(4));
 		testmap.put(new ProductOffer(new Product(6, new Technology(0, "tech1")), new District(6, "test")), new Integer(2));
 		testmap.put(new ProductOffer(new Product(7, new Technology(0, "tech1")), new District(7, "test")), new Integer(5));

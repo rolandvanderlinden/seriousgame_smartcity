@@ -41,7 +41,7 @@ public class OverviewScreen extends AScreen
 		VectorF2 nextbuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 30), holdersize);
 		VectorF2 undobuttonsize = SizeCalculator.calculateSize(new VectorF2(170, 30), holdersize);
 		VectorF2 previousbuttonsize = SizeCalculator.calculateSize(new VectorF2(170, 30), holdersize);
-		VectorF2 dpanelsize = SizeCalculator.calculateSize(holdersize, 0.275f, 0.82f);
+		VectorF2 dpanelsize = SizeCalculator.calculateSize(holdersize, 0.275f, 0.835f);
 		
 		//Locations
 		VectorF2 rlabelpos = LocationCalculator.calculateLocation(rlabelsize, holdersize, LocationType.CENTER, 0.03f); //location set on text set
@@ -50,7 +50,7 @@ public class OverviewScreen extends AScreen
 		VectorF2 previousbuttonpos = LocationCalculator.calculateLocationWithMargins(previousbuttonsize, holdersize, LocationType.BEGIN, 0.03f, new VectorF2(18,0));
 		VectorF2[] dispposarray = new VectorF2[districts.length];
 		for(int i = 0; i < districts.length; i++)
-			dispposarray[i] = LocationCalculator.calculateLocation(dpanelsize, holdersize, 0.05f + (i * 0.3125f), 0.13f);
+			dispposarray[i] = LocationCalculator.calculateLocation(dpanelsize, holdersize, 0.05f + (i * 0.3125f), 0.115f);
 		
 		//Insert label
 		this.roundLabel = new JLabel();
