@@ -17,6 +17,9 @@ import content.technology.TechnologyRef;
 
 public class ProductManager
 {
+	public final static String techImprovementActionCommand = "TechImprovement with ID: ";
+	public final static String technologyActionCommand = "Technology with ID: ";
+	
 	private static ProductManager instance;
 	protected Technology[] technologies;
 	protected TechImprovement[] improvements;

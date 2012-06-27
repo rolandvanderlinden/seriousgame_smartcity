@@ -23,7 +23,7 @@ public class ProductOfferScreen extends AScreen
 	{
 		super(size);
 		
-		this.productOfferController = new ProductOfferController(screenDisplayController, district);
+		this.productOfferController = new ProductOfferController(screenDisplayController, district, this);
 		this.district = district;
 		
 		initialize();
@@ -47,4 +47,8 @@ public class ProductOfferScreen extends AScreen
 		this.add(productOfferPanel);
 	}
 
+	public ProductOfferPanel getProductOfferPanel()
+	{
+		return this.productOfferPanel;
+	}
 }

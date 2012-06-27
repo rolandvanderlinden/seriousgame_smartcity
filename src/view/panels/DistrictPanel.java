@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import model.data.District;
+import model.data.ProductOffer;
 import model.managers.DistrictManager;
+import model.managers.TeamManager;
 import model.util.VectorF2;
 import util.ComponentUtil;
 import util.LocationCalculator;
@@ -120,10 +123,12 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		this.add(happinessPanel);
 		
 		//Insert productoffer panels
-		this.roundOffersPanel = new ProductOfferCollectionPanel(new Dimension((int)roundofferpanelsize.x, (int)roundofferpanelsize.y));
+		HashMap<ProductOffer, Integer> roundOfferMap = TeamManager.getInstance().getRoundOfferMapForDistrict(district.getID());
+		HashMap<ProductOffer, Integer> acceptedOfferMap = TeamManager.getInstance().getAcceptedOfferMapForDistrict(district.getID());
+		this.roundOffersPanel = new ProductOfferCollectionPanel(new Dimension((int)roundofferpanelsize.x, (int)roundofferpanelsize.y), roundOfferMap);
 		ComponentUtil.setComponentBounds(roundOffersPanel, roundofferpanelsize, roundofferppos);
 		this.add(roundOffersPanel);
-		this.acceptedOffersPanel = new ProductOfferCollectionPanel(new Dimension((int)accofferpanelsize.x, (int)accofferpanelsize.y));
+		this.acceptedOffersPanel = new ProductOfferCollectionPanel(new Dimension((int)accofferpanelsize.x, (int)accofferpanelsize.y), acceptedOfferMap);
 		ComponentUtil.setComponentBounds(acceptedOffersPanel, accofferpanelsize, accofferppos);
 		this.add(acceptedOffersPanel);
 	}

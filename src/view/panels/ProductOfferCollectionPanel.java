@@ -27,14 +27,14 @@ public class ProductOfferCollectionPanel extends JPanel
 	protected JScrollPane scrollPane;
 	protected JPanel offerPanel;
 	
-	public ProductOfferCollectionPanel(Dimension size)
+	public ProductOfferCollectionPanel(Dimension size, HashMap<ProductOffer, Integer> pomap)
 	{
 		super();
 		
-		initialize(size);
+		initialize(size, pomap);
 	}
 	
-	private void initialize(Dimension size)
+	private void initialize(Dimension size, HashMap<ProductOffer, Integer> pomap)
 	{
 		this.setLayout(null);
 		this.setSize(size);
@@ -46,24 +46,7 @@ public class ProductOfferCollectionPanel extends JPanel
 		//Locations
 
 		//Start with an empty panel.
-		//TODO remove testcase
-		HashMap<ProductOffer, Integer> testmap = new HashMap<ProductOffer, Integer>();
-		testmap.put(new ProductOffer(new Product(0, new Technology(0, "tech1")), new District(0, "test")), new Integer(1));
-		testmap.put(new ProductOffer(new Product(1, new Technology(0, "tech1")), new District(1, "test")), new Integer(2));
-		testmap.put(new ProductOffer(new Product(2, new Technology(0, "tech1")), new District(2, "test")), new Integer(1));
-		testmap.put(new ProductOffer(new Product(3, new Technology(0, "tech1")), new District(3, "test")), new Integer(3));
-		testmap.put(new ProductOffer(new Product(4, new Technology(0, "tech2")), new District(4, "test")), new Integer(1));
-		testmap.put(new ProductOffer(new Product(5, new Technology(0, "tech1")), new District(5, "test")), new Integer(4));
-		testmap.put(new ProductOffer(new Product(6, new Technology(0, "tech1")), new District(6, "test")), new Integer(2));
-		testmap.put(new ProductOffer(new Product(7, new Technology(0, "tech1")), new District(7, "test")), new Integer(5));
-		testmap.put(new ProductOffer(new Product(8, new Technology(0, "tech1")), new District(8, "test")), new Integer(6));
-		testmap.put(new ProductOffer(new Product(9, new Technology(0, "tech1")), new District(9, "test")), new Integer(3));
-		testmap.put(new ProductOffer(new Product(10, new Technology(0, "tech1")), new District(10, "test")), new Integer(5));
-		testmap.put(new ProductOffer(new Product(11, new Technology(0, "tech1")), new District(11, "test")), new Integer(12));
-		testmap.put(new ProductOffer(new Product(12, new Technology(0, "tech1")), new District(12, "test")), new Integer(11));
-		testmap.put(new ProductOffer(new Product(13, new Technology(0, "tech1")), new District(13, "test")), new Integer(3));
-		
-		fillWithProductOffers(testmap); //new HashMap<ProductOffer, Integer>()
+		fillWithProductOffers(pomap);
 	}
 	
 	/**

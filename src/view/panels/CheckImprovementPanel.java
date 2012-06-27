@@ -13,19 +13,23 @@ import util.LocationCalculator;
 import util.LocationCalculator.LocationType;
 import util.SizeCalculator;
 import view.components.BufferedImageJPanel;
+import controller.screens.ProductOfferController;
 
 public class CheckImprovementPanel extends JPanel
-{
+{	
+	protected ProductOfferController productOfferController;
+	
 	protected TechImprovement improvement;
 	
 	protected BufferedImageJPanel improvementImage;
 	protected JCheckBox checkbox;
 	
-	public CheckImprovementPanel(Dimension size, TechImprovement improvement)
+	public CheckImprovementPanel(Dimension size, TechImprovement improvement, ProductOfferController productOfferController)
 	{
 		super();
 		
 		this.improvement = improvement;
+		this.productOfferController = productOfferController;
 		
 		initialize(size);
 	}
@@ -54,9 +58,10 @@ public class CheckImprovementPanel extends JPanel
 		this.checkbox = new JCheckBox();
 		ComponentUtil.setComponentBounds(checkbox, checkboxsize, checkboxpos);
 		this.checkbox.setOpaque(false);
+		this.checkbox.setActionCommand(ProductManager.techImprovementActionCommand + improvement.getID());
+		this.checkbox.addItemListener(productOfferController);
 		this.checkbox.setToolTipText("Select technology improvement " + improvement.getName() + ". Multi-selection allowed.");
 		this.add(checkbox);
-		
 	}
 	
 	public JCheckBox getCheckBox()

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -33,6 +34,7 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 	protected JLabel titleLabel, technologyLabel, improvementLabel;
 	protected BufferedImageJPanel districtImage;
 	protected RadioTechnologyPanel[] rtpanels;
+	protected ButtonGroup radioButtonGroup;
 	protected CheckImprovementPanel[] cipanels;
 	protected JButton offerButton, cancelButton;
 	
@@ -110,12 +112,13 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		//Add technology panels
 		int rtpaneldistance = 120;
 		this.rtpanels = new RadioTechnologyPanel[technologies.length];
+		this.radioButtonGroup = new ButtonGroup();
 		for(int i = 0; i < technologies.length; i++)
 		{
 			Technology technology = technologies[i];
 			VectorF2 pos = new VectorF2(firstrtpanelpos.x + (i * rtpaneldistance), firstrtpanelpos.y);
 			
-			RadioTechnologyPanel rtpanel = new RadioTechnologyPanel(new Dimension((int)rtpanelsize.x, (int)rtpanelsize.y), technology);
+			RadioTechnologyPanel rtpanel = new RadioTechnologyPanel(new Dimension((int)rtpanelsize.x, (int)rtpanelsize.y), technology, this.productOfferController, radioButtonGroup);
 			ComponentUtil.setComponentBounds(rtpanel, rtpanelsize, pos);
 			rtpanels[i] = rtpanel;
 			this.add(rtpanel);
@@ -129,7 +132,7 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 			TechImprovement improvement = improvements[i];
 			VectorF2 pos = new VectorF2(firstcipanelpos.x + (i * cipaneldistance), firstcipanelpos.y);
 			
-			CheckImprovementPanel cipanel = new CheckImprovementPanel(new Dimension((int)cipanelsize.x, (int)cipanelsize.y), improvement);
+			CheckImprovementPanel cipanel = new CheckImprovementPanel(new Dimension((int)cipanelsize.x, (int)cipanelsize.y), improvement, productOfferController);
 			ComponentUtil.setComponentBounds(cipanel, cipanelsize, pos);
 			cipanels[i] = cipanel;
 			this.add(cipanel);
@@ -151,4 +154,8 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		this.add(cancelButton);
 	}
 
+	public JButton getOfferButton()
+	{
+		return this.offerButton;
+	}
 }

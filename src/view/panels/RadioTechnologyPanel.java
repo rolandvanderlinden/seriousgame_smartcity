@@ -1,8 +1,8 @@
 package view.panels;
 
-import java.awt.Color;
 import java.awt.Dimension;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -14,19 +14,24 @@ import util.LocationCalculator;
 import util.LocationCalculator.LocationType;
 import util.SizeCalculator;
 import view.components.BufferedImageJPanel;
+import controller.screens.ProductOfferController;
 
 public class RadioTechnologyPanel extends JPanel
 {
 	protected Technology technology;
+	protected ProductOfferController productOfferController;
+	protected ButtonGroup radioButtonGroup;
 	
 	protected BufferedImageJPanel technologyImage;
 	protected JRadioButton radioButton;
 	
-	public RadioTechnologyPanel(Dimension size, Technology technology)
+	public RadioTechnologyPanel(Dimension size, Technology technology, ProductOfferController productOfferController, ButtonGroup radioButtonGroup)
 	{
 		super();
 		
 		this.technology = technology;
+		this.productOfferController = productOfferController;
+		this.radioButtonGroup = radioButtonGroup;
 		
 		initialize(size);
 	}
@@ -56,7 +61,9 @@ public class RadioTechnologyPanel extends JPanel
 		ComponentUtil.setComponentBounds(radioButton, radiobuttonsize, radiobuttonpos);
 		this.radioButton.setOpaque(false);
 		this.radioButton.setToolTipText("Select technology " + technology.getName() + ". Automatically unselects a previously selected technology.");
-		//this.radioButton.setBackground(new Color(1, 1, 1, 0.25f));
+		this.radioButton.setActionCommand(ProductManager.technologyActionCommand + technology.getID());
+		this.radioButtonGroup.add(radioButton);
+		this.radioButton.addActionListener(productOfferController);
 		this.add(radioButton);
 		
 	}

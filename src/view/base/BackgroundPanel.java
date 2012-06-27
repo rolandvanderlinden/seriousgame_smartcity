@@ -2,6 +2,7 @@ package view.base;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FontMetrics;
 
 import javax.swing.JPanel;
 
@@ -30,7 +31,7 @@ public class BackgroundPanel extends JPanel
 	}
 	
 	private void init(Dimension size, int outerborder)
-	{
+	{	
 		//Create this screen itself.
 		this.setLayout(null);
 		this.setSize(size);

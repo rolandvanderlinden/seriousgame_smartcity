@@ -25,6 +25,21 @@ public class Team
 	}
 	
 	/**
+	 * This will add a new offer to the roundoffers list.
+	 */
+	public void addRoundOffer(ProductOffer roundOffer)
+	{
+		if(roundOffers.containsKey(roundOffer))
+		{
+			int oldTimesOffered = roundOffers.get(roundOffer);
+			int newTimesOffered = oldTimesOffered + 1;
+			roundOffers.put(roundOffer, newTimesOffered);
+		}
+		else
+			roundOffers.put(roundOffer, 1);
+	}
+	
+	/**
 	 * This will add all the roundoffers to the acceptedOffers.
 	 */
 	public void addRoundOffersToAcceptedOffers()
@@ -75,5 +90,26 @@ public class Team
 	public Color getTeamColor()
 	{
 		return teamColor;
+	}
+	
+	public HashMap<ProductOffer, Integer> getRoundOffersForDistrict(int district)
+	{
+		return getOffersForDistrict(roundOffers, district);
+	}
+	
+	public HashMap<ProductOffer, Integer> getAcceptedOffersForDistrict(int district)
+	{
+		return getOffersForDistrict(acceptedOffers, district);	
+	}
+	
+	private HashMap<ProductOffer, Integer> getOffersForDistrict(HashMap<ProductOffer, Integer> map, int district)
+	{
+		HashMap<ProductOffer, Integer> result = new HashMap<ProductOffer, Integer>(map.size());
+		
+		for(Entry<ProductOffer, Integer> entry : map.entrySet())
+			if(entry.getKey().getDistrict().getID() == district)
+				result.put(entry.getKey(), entry.getValue());
+		
+		return result;
 	}
 }
