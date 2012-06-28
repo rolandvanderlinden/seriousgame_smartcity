@@ -67,6 +67,12 @@ public class TeamManager
 		return teams;
 	}
 	
+	public void resetRoundOffers()
+	{
+		for(Team t : teams)
+			t.clearRoundOffers();
+	}
+	
 	public HashMap<ProductOffer, Integer> getRoundOfferMapForDistrict(int district)
 	{
 		HashMap<ProductOffer, Integer> result = new HashMap<ProductOffer, Integer>();

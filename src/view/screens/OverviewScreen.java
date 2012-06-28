@@ -24,14 +24,16 @@ public class OverviewScreen extends AScreen
 	protected OverviewController overviewController;
 	
 	private JLabel roundLabel;
-	private JButton nextRoundButton, undoRoundButton, previousResultsButton;
+	private JButton nextRoundButton, unlockUndoButton, undoRoundButton, previousResultsButton;
 	private DistrictPanel[] districtPanels;
+	private int roundNumber;
 	
-	public OverviewScreen(Dimension size, IScreenDisplayController screenDisplayController, District[] districts)
+	public OverviewScreen(Dimension size, IScreenDisplayController screenDisplayController, District[] districts, int roundNumber)
 	{
 		super(size);
 		
-		this.overviewController = new OverviewController(screenDisplayController);
+		this.overviewController = new OverviewController(screenDisplayController, this);
+		this.roundNumber = roundNumber;
 		
 		initialize(districts);
 	}
@@ -45,13 +47,15 @@ public class OverviewScreen extends AScreen
 		VectorF2 holdersize = new VectorF2(width, height);
 		VectorF2 rlabelsize = SizeCalculator.calculateSize(new VectorF2(1, 1), holdersize); //size set on text set.
 		VectorF2 nextbuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 30), holdersize);
-		VectorF2 undobuttonsize = SizeCalculator.calculateSize(new VectorF2(170, 30), holdersize);
+		VectorF2 unlockundobuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 30), holdersize);
+		VectorF2 undobuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 30), holdersize);
 		VectorF2 previousbuttonsize = SizeCalculator.calculateSize(new VectorF2(170, 30), holdersize);
 		VectorF2 dpanelsize = SizeCalculator.calculateSize(holdersize, 0.275f, 0.835f);
 		
 		//Locations
 		VectorF2 rlabelpos = LocationCalculator.calculateLocation(rlabelsize, holdersize, LocationType.CENTER, 0.03f); //location set on text set
 		VectorF2 nextbuttonpos = LocationCalculator.calculateLocationWithMargins(nextbuttonsize, holdersize, LocationType.END, 0.03f, new VectorF2(18,0));
+		VectorF2 unlockundobuttonpos = LocationCalculator.calculateLocation(undobuttonsize, holdersize, 0.6f, 0.03f);
 		VectorF2 undobuttonpos = LocationCalculator.calculateLocation(undobuttonsize, holdersize, 0.7f, 0.03f);
 		VectorF2 previousbuttonpos = LocationCalculator.calculateLocationWithMargins(previousbuttonsize, holdersize, LocationType.BEGIN, 0.03f, new VectorF2(18,0));
 		VectorF2[] dispposarray = new VectorF2[districts.length];
@@ -68,13 +72,23 @@ public class OverviewScreen extends AScreen
 		//Insert buttons
 		this.nextRoundButton = new JButton("Next Round");
 		ComponentUtil.setComponentBounds(nextRoundButton, nextbuttonsize, nextbuttonpos);
+		this.nextRoundButton.setActionCommand(OverviewController.nextRoundActionCommand);
+		this.nextRoundButton.addActionListener(overviewController);
 		this.add(nextRoundButton);
-		this.undoRoundButton = new JButton("Reset Current Round");
+		this.unlockUndoButton = new JButton("Unlock Reset");
+		ComponentUtil.setComponentBounds(unlockUndoButton, unlockundobuttonsize, unlockundobuttonpos);
+		this.unlockUndoButton.setActionCommand(OverviewController.unlockResetActionCommand);
+		this.unlockUndoButton.addActionListener(overviewController);
+		this.add(unlockUndoButton);
+		this.undoRoundButton = new JButton("Reset Round");
 		ComponentUtil.setComponentBounds(undoRoundButton, undobuttonsize, undobuttonpos);
+		this.undoRoundButton.setEnabled(false);
+		this.undoRoundButton.setActionCommand(OverviewController.resetRoundActionCommand);
+		this.undoRoundButton.addActionListener(overviewController);
 		this.add(undoRoundButton);
 		this.previousResultsButton = new JButton("Previous offer results");
 		ComponentUtil.setComponentBounds(previousResultsButton, previousbuttonsize, previousbuttonpos);
-		this.add(previousResultsButton);
+		//this.add(previousResultsButton);
 		
 		//Insert districtpanels
 		this.districtPanels = new DistrictPanel[districts.length];
@@ -85,6 +99,9 @@ public class OverviewScreen extends AScreen
 			districtPanels[i] = dp;
 			this.add(dp);			
 		}		
+		
+		//Start up some components
+		this.setRound(this.roundNumber);
 	}
 	
 	/**
@@ -106,4 +123,13 @@ public class OverviewScreen extends AScreen
 		ComponentUtil.setComponentBounds(roundLabel, size, location);
 	}
 	
+	public JButton getUnlockResetButton()
+	{
+		return this.unlockUndoButton;
+	}
+	
+	public JButton getResetRoundButton()
+	{
+		return this.undoRoundButton;
+	}
 }

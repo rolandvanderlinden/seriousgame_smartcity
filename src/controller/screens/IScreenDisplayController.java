@@ -8,4 +8,5 @@ public interface IScreenDisplayController
 	
 	public void insertOverviewScreen();
 	public void insertProductOfferScreen(District district);
+	public void insertEndOfRoundScreen();
 }

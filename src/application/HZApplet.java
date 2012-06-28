@@ -2,16 +2,15 @@ package application;
 
 import javax.swing.JApplet;
 
-import controller.screens.IScreenDisplayController;
-
 import model.data.District;
 import model.managers.DistrictManager;
-import model.managers.ProductManager;
 import util.Output;
 import view.base.BackgroundPanel;
 import view.screens.AScreen;
+import view.screens.EndOfRoundScreen;
 import view.screens.OverviewScreen;
 import view.screens.ProductOfferScreen;
+import controller.screens.IScreenDisplayController;
 
 public class HZApplet extends JApplet implements IScreenDisplayController
 {
@@ -21,7 +20,7 @@ public class HZApplet extends JApplet implements IScreenDisplayController
 	
 	public BackgroundPanel backgroundPanel;
 	public AScreen mainScreen;
-	
+	public int currentRoundNumber;
 	
 	// **********************************************
 	// init
@@ -35,10 +34,12 @@ public class HZApplet extends JApplet implements IScreenDisplayController
 		try
 		{
 			Output.show();
-
+			
+			//init some other components
+			this.currentRoundNumber = 1;
+			
 			//Create the basic layout of the applet.
 			this.createBasicLayout();
-			
 			//Insert the overview screen as the first screen.
 			this.insertOverviewScreen();
 		}
@@ -76,12 +77,11 @@ public class HZApplet extends JApplet implements IScreenDisplayController
 		}
 	}
 	
-	@Override
-	public void insertOverviewScreen()
+	private void insertAScreen(AScreen screen)
 	{
 		this.remove(backgroundPanel);
 		
-		this.mainScreen = new OverviewScreen(backgroundPanel.getSize(), this, DistrictManager.getInstance().getDistricts());
+		this.mainScreen = screen;
 		this.add(mainScreen);
 		this.add(backgroundPanel);
 		
@@ -90,16 +90,21 @@ public class HZApplet extends JApplet implements IScreenDisplayController
 	}
 	
 	@Override
+	public void insertOverviewScreen()
+	{
+		insertAScreen(new OverviewScreen(backgroundPanel.getSize(), this, DistrictManager.getInstance().getDistricts(), this.currentRoundNumber));
+	}
+	
+	@Override
 	public void insertProductOfferScreen(District district)
 	{
-		this.remove(backgroundPanel);
-		
-		this.mainScreen = new ProductOfferScreen(backgroundPanel.getSize(), this, district);
-		this.add(mainScreen);
-		this.add(backgroundPanel);
-		
-		this.rootPane.revalidate();
-		this.rootPane.repaint();
+		insertAScreen(new ProductOfferScreen(backgroundPanel.getSize(), this, district));
+	}
+	
+	@Override
+	public void insertEndOfRoundScreen()
+	{
+		insertAScreen(this.mainScreen = new EndOfRoundScreen(backgroundPanel.getSize(), currentRoundNumber));
 	}
 	
 	
