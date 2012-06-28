@@ -92,6 +92,16 @@ public class Team
 		return teamColor;
 	}
 	
+	public HashMap<ProductOffer, Integer> getRoundOffers()
+	{
+		return this.roundOffers;
+	}
+	
+	public HashMap<ProductOffer, Integer> getAcceptedOffers()
+	{
+		return this.acceptedOffers;
+	}
+	
 	public HashMap<ProductOffer, Integer> getRoundOffersForDistrict(int district)
 	{
 		return getOffersForDistrict(roundOffers, district);

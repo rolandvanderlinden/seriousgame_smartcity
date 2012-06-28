@@ -11,10 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import model.data.District;
-import model.data.Product;
+import model.data.AcceptanceData;
 import model.data.ProductOffer;
-import model.data.Technology;
 import model.managers.ProductManager;
 import model.util.VectorF2;
 import util.ComponentUtil;
@@ -22,33 +20,32 @@ import util.ProductOfferUtil;
 import view.components.BufferedImageJPanel;
 import content.Content;
 
-public class ProductOfferCollectionPanel extends JPanel
+public class AcceptanceCollectionPanel extends JPanel
 {
 	protected JScrollPane scrollPane;
-	protected JPanel offerPanel;
+	protected JPanel acceptancePanel;
 	
-	public ProductOfferCollectionPanel(Dimension size, HashMap<ProductOffer, Integer> pomap)
+	public AcceptanceCollectionPanel(Dimension size, ArrayList<AcceptanceData> data)
 	{
 		super();
 		
-		initialize(size, pomap);
+		initialize(size, data);
 	}
 	
-	private void initialize(Dimension size, HashMap<ProductOffer, Integer> pomap)
+	private void initialize(Dimension size, ArrayList<AcceptanceData> data)
 	{
 		this.setLayout(null);
 		this.setSize(size);
 		this.setOpaque(false);
 
 		//Start with an empty panel.
-		fillWithProductOffers(pomap);
+		fillWithAcceptanceData(data);
 	}
 	
 	/**
-	 * This will make sure the panel contains all necessary information from the productoffers.
-	 * @param productOffers
+	 * This will make sure the panel contains all necessary information from the acceptance of offers.
 	 */
-	public void fillWithProductOffers(HashMap<ProductOffer, Integer> productOffers)
+	public void fillWithAcceptanceData(ArrayList<AcceptanceData> data)
 	{
 		//Remove the old offers
 		this.removeOldProductOffers();
@@ -56,53 +53,74 @@ public class ProductOfferCollectionPanel extends JPanel
 		//Sizes of items & panels
 		VectorF2 holdersize = new VectorF2(this.getWidth(), this.getHeight());
 		VectorF2 entrysize = new VectorF2(holdersize.x - 18, 30);
-		VectorF2 panelsize = new VectorF2(holdersize.x - 18, productOffers.size() * entrysize.y);
+		VectorF2 panelsize = new VectorF2(holdersize.x - 18, data.size() * entrysize.y);
 		VectorF2 imagesize = new VectorF2(40, 0.75f * entrysize.y);
 		VectorF2 countsize = new VectorF2(30, 20);
+		VectorF2 acceptancesize = new VectorF2(120, 20);
 				
 		//Locations & distances
 		float imageX = 25;
 		float imageY = 0.1f * entrysize.y;
 		float countX = 90;
 		float countY = 0.15f * entrysize.y;
+		float acceptanceX = 140;
+		float acceptanceY = 0.15f * entrysize.y;
 		
-		//Create the offerpanel
-		this.offerPanel = new JPanel();
-		this.offerPanel.setLayout(null);
-		this.offerPanel.setOpaque(false);
-		ComponentUtil.setComponentBounds(offerPanel, panelsize, new VectorF2());
-		this.offerPanel.setPreferredSize(new Dimension((int)panelsize.x, (int)panelsize.y));
+		//Create the acceptance panel
+		this.acceptancePanel = new JPanel();
+		this.acceptancePanel.setLayout(null);
+		this.acceptancePanel.setOpaque(false);
+		ComponentUtil.setComponentBounds(acceptancePanel, panelsize, new VectorF2());
+		this.acceptancePanel.setPreferredSize(new Dimension((int)panelsize.x, (int)panelsize.y));
 
-		//Insert the offers
+		//Insert the data
 		int index = 0;
-		Set<Entry<ProductOffer, Integer>> entrySet = productOffers.entrySet();
-		ArrayList<Entry<ProductOffer, Integer>> sortedEntryList = ProductOfferUtil.sortEntrySetOnHashCode(entrySet);
-		for(Entry<ProductOffer, Integer> entry : sortedEntryList)
+		for(AcceptanceData ad : data)
 		{
-			ProductOffer po = entry.getKey();
-			int timesOffered = entry.getValue();
+			ProductOffer po = ad.productOffer;
+			int count = ad.count;
+			boolean accepted = ad.accepted;
 			
 			//Insert product image
 			VectorF2 imagepos = new VectorF2(imageX, imageY + (index * entrysize.y));
 			BufferedImageJPanel productImage = new BufferedImageJPanel(ProductManager.getProductResourceInfo(po.getProduct()));
 			ComponentUtil.setComponentBounds(productImage, imagesize, imagepos);
 			productImage.setToolTipText(po.getProduct().toString());
-			offerPanel.add(productImage);
+			acceptancePanel.add(productImage);
 			
 			//Insert count label
 			VectorF2 countpos = new VectorF2(countX, countY + (index * entrysize.y));
-			JLabel countLabel = new JLabel("" + timesOffered);
+			JLabel countLabel = new JLabel("" + count);
 			countLabel.setForeground(Color.white);
 			countLabel.setFont(Content.smallFont);
 			countLabel.setToolTipText("The number of product offers of type " + po.getProduct().toString());
 			ComponentUtil.setComponentBounds(countLabel, countsize, countpos);
-			offerPanel.add(countLabel);
+			acceptancePanel.add(countLabel);
+			
+			//Insert acceptance label
+			VectorF2 acceptancepos = new VectorF2(acceptanceX, acceptanceY + (index * entrysize.y));
+			JLabel acceptanceLabel = new JLabel();
+			acceptanceLabel.setFont(Content.smallFont);
+			ComponentUtil.setComponentBounds(acceptanceLabel, acceptancesize, acceptancepos);
+			if(accepted)
+			{
+				acceptanceLabel.setText("Accepted");
+				acceptanceLabel.setForeground(Color.green);
+				acceptanceLabel.setToolTipText("District " + po.getDistrict().getName() + " accepted productoffer " + po.toString() + ".");				
+			}
+			else
+			{
+				acceptanceLabel.setText("Rejected");
+				acceptanceLabel.setForeground(Color.red);
+				acceptanceLabel.setToolTipText("District " + po.getDistrict().getName() + " rejected productoffer " + po.toString() + ".");			
+			}
+			acceptancePanel.add(acceptanceLabel);
 			
 			index++;
 		}
 		
 		//Create the scrollpane
-		this.scrollPane = new JScrollPane(offerPanel);
+		this.scrollPane = new JScrollPane(acceptancePanel);
 		ComponentUtil.setComponentBounds(scrollPane, holdersize, new VectorF2());
 		this.scrollPane.getViewport().setOpaque(false);
 		this.scrollPane.setOpaque(false);
@@ -118,7 +136,7 @@ public class ProductOfferCollectionPanel extends JPanel
 		{
 			this.remove(scrollPane);
 			this.scrollPane = null;
-			this.offerPanel = null;
+			this.acceptancePanel = null;
 		}
 	}
 }

@@ -13,6 +13,8 @@ public class Config
 	public final static Dimension appsize = new Dimension(1200, 900);
 	public final static int outerBorderSize = 2;
 	
+	public final static int fundsGainPerAcceptedProduct = 2;
+	
 	//Startup data
 	public final static String[] teamNames = { "team1", "team2", "team3" };
 	public final static String[] districtNames = { "d1", "d2", "d3" };
