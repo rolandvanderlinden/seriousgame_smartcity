@@ -48,6 +48,7 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		int width = size.width;
 		int height = size.height;
 		FontMetrics mediumFontMetrics = this.getFontMetrics(Content.mediumFont);
+		FontMetrics largeFontMetrics = this.getFontMetrics(Content.largeFont);
 		
 		this.setLayout(null);
 		
@@ -58,28 +59,28 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		
 		//Sizes
 		VectorF2 holdersize = new VectorF2(width, height);
-		VectorF2 namelabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(nameLabelText), 30), holdersize);
+		VectorF2 namelabelsize = SizeCalculator.calculateSize(new VectorF2(largeFontMetrics.stringWidth(nameLabelText), 30), holdersize);
 		VectorF2 hlabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(happinessLabelText), 20), holdersize);
 		VectorF2 roundofferlabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(roundOfferLabelText), 30), holdersize);
 		VectorF2 offerbuttonsize = SizeCalculator.calculateSize(new VectorF2(150, 28), holdersize);
 		VectorF2 imagesize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.22f);
 		VectorF2 hpanelsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.08f);
-		VectorF2 roundofferpanelsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.35f);
+		VectorF2 roundofferpanelsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.36f);
 		
 		//Locations
-		VectorF2 namelabelpos = LocationCalculator.calculateLocation(namelabelsize, holdersize, LocationType.CENTER, 0.02f);
-		VectorF2 hlabelpos = LocationCalculator.calculateLocation(hlabelsize, holdersize, LocationType.CENTER, 0.33f);
-		VectorF2 roundofferlabelpos = LocationCalculator.calculateLocation(roundofferlabelsize, holdersize, LocationType.CENTER, 0.55f);
-		VectorF2 offerbuttonpos = LocationCalculator.calculateLocation(offerbuttonsize, holdersize, LocationType.CENTER, 0.46f);
-		VectorF2 imagepos = LocationCalculator.calculateLocation(imagesize, holdersize, LocationType.CENTER, 0.075f);
-		VectorF2 hpanelpos = LocationCalculator.calculateLocation(hpanelsize, holdersize, LocationType.CENTER, 0.325f);
-		VectorF2 roundofferppos = LocationCalculator.calculateLocation(roundofferpanelsize, holdersize, LocationType.CENTER, 0.6f);
+		VectorF2 namelabelpos = LocationCalculator.calculateLocation(namelabelsize, holdersize, LocationType.CENTER, 0.03f);
+		VectorF2 hlabelpos = LocationCalculator.calculateLocation(hlabelsize, holdersize, LocationType.CENTER, 0.34f);
+		VectorF2 roundofferlabelpos = LocationCalculator.calculateLocation(roundofferlabelsize, holdersize, LocationType.CENTER, 0.44f);
+		VectorF2 offerbuttonpos = LocationCalculator.calculateLocation(offerbuttonsize, holdersize, LocationType.CENTER, 0.9f);
+		VectorF2 imagepos = LocationCalculator.calculateLocation(imagesize, holdersize, LocationType.CENTER, 0.085f);
+		VectorF2 hpanelpos = LocationCalculator.calculateLocation(hpanelsize, holdersize, LocationType.CENTER, 0.335f);
+		VectorF2 roundofferppos = LocationCalculator.calculateLocation(roundofferpanelsize, holdersize, LocationType.CENTER, 0.495f);
 		
 		//Insert labels
 		this.nameLabel = new JLabel(nameLabelText);
 		ComponentUtil.setComponentBounds(nameLabel, namelabelsize, namelabelpos);
 		this.nameLabel.setForeground(Color.white);
-		this.nameLabel.setFont(Content.mediumFont);
+		this.nameLabel.setFont(Content.largeFont);
 		this.add(nameLabel);
 		this.happinessLabel = new JLabel(happinessLabelText);
 		ComponentUtil.setComponentBounds(happinessLabel, hlabelsize, hlabelpos);

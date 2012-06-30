@@ -18,4 +18,5 @@ public class Content
 	public final static Font smallFont = new Font("Arial", Font.PLAIN, 10);
 	public final static Font mediumFont = new Font("Arial", Font.PLAIN, 14);
 	public final static Font largeFont = new Font("Arial", Font.PLAIN, 18);
+	public final static Font hugeFont = new Font("Arial", Font.PLAIN, 24);
 }

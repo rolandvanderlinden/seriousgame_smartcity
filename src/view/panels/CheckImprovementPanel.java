@@ -47,7 +47,7 @@ public class CheckImprovementPanel extends JPanel
 		
 		//Locations
 		VectorF2 improvimagepos = LocationCalculator.calculateLocation(improvimagesize, holdersize, LocationType.CENTER, 0.1f);
-		VectorF2 checkboxpos = LocationCalculator.calculateLocation(checkboxsize, holdersize, LocationType.CENTER, 0.9f);
+		VectorF2 checkboxpos = LocationCalculator.calculateLocation(checkboxsize, holdersize, LocationType.CENTER, 0.6f);
 		
 		//Add components
 		this.improvementImage = new BufferedImageJPanel(ProductManager.getTechImprovementResourceInfo(improvement));

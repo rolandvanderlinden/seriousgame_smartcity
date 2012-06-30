@@ -55,16 +55,17 @@ public class ProductOfferCollectionPanel extends JPanel
 		
 		//Sizes of items & panels
 		VectorF2 holdersize = new VectorF2(this.getWidth(), this.getHeight());
-		VectorF2 entrysize = new VectorF2(holdersize.x - 18, 48);
-		VectorF2 panelsize = new VectorF2(holdersize.x - 18, productOffers.size() * entrysize.y);
-		VectorF2 imagesize = new VectorF2(56, 0.75f * entrysize.y);
+		float initialY = 5;
+		VectorF2 entrysize = new VectorF2(holdersize.x - 18, 40);
+		VectorF2 panelsize = new VectorF2(holdersize.x - 18, initialY + (productOffers.size() * entrysize.y));
+		VectorF2 imagesize = new VectorF2(50, 0.75f * entrysize.y);
 		VectorF2 countsize = new VectorF2(30, 20);
 				
 		//Locations & distances
 		float imageX = 25;
 		float imageY = 0.1f * entrysize.y;
-		float countX = 90;
-		float countY = 0.15f * entrysize.y;
+		float countX = 115;
+		float countY = 0.2f * entrysize.y;
 		
 		//Create the offerpanel
 		this.offerPanel = new JPanel();
@@ -83,17 +84,17 @@ public class ProductOfferCollectionPanel extends JPanel
 			int timesOffered = entry.getValue();
 			
 			//Insert product image
-			VectorF2 imagepos = new VectorF2(imageX, imageY + (index * entrysize.y));
+			VectorF2 imagepos = new VectorF2(imageX, initialY + imageY + (index * entrysize.y));
 			BufferedImageJPanel productImage = new BufferedImageJPanel(ProductManager.getProductResourceInfo(po.getProduct()));
 			ComponentUtil.setComponentBounds(productImage, imagesize, imagepos);
 			productImage.setToolTipText(po.getProduct().toString());
 			offerPanel.add(productImage);
 			
 			//Insert count label
-			VectorF2 countpos = new VectorF2(countX, countY + (index * entrysize.y));
+			VectorF2 countpos = new VectorF2(countX, initialY + countY + (index * entrysize.y));
 			JLabel countLabel = new JLabel("" + timesOffered);
 			countLabel.setForeground(Color.white);
-			countLabel.setFont(Content.smallFont);
+			countLabel.setFont(Content.mediumFont);
 			countLabel.setToolTipText("The number of product offers of type " + po.getProduct().toString());
 			ComponentUtil.setComponentBounds(countLabel, countsize, countpos);
 			offerPanel.add(countLabel);

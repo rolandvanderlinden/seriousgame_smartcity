@@ -49,7 +49,7 @@ public class RadioTechnologyPanel extends JPanel
 		
 		//Locations
 		VectorF2 techimagepos = LocationCalculator.calculateLocation(techimagesize, holdersize, LocationType.CENTER, 0.1f);
-		VectorF2 radiobuttonpos = LocationCalculator.calculateLocation(radiobuttonsize, holdersize, LocationType.CENTER, 0.9f);
+		VectorF2 radiobuttonpos = LocationCalculator.calculateLocation(radiobuttonsize, holdersize, LocationType.CENTER, 0.6f);
 		
 		//Add components
 		this.technologyImage = new BufferedImageJPanel(ProductManager.getTechnologyResourceInfo(technology));

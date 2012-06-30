@@ -58,7 +58,6 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		FontMetrics mediumFontMetrics = this.getFontMetrics(Content.mediumFont);
 		FontMetrics largeFontMetrics = this.getFontMetrics(Content.largeFont);
 		
-		
 		//Text of labels
 		String titleText = "New product offer for district " + this.district.getName();
 		String technologyText = "Technology";
@@ -70,20 +69,20 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		VectorF2 techlabelsize = new VectorF2(mediumFontMetrics.stringWidth(technologyText), 20);
 		VectorF2 improvlabelsize = new VectorF2(mediumFontMetrics.stringWidth(improvementText), 20);
 		VectorF2 dimagesize = SizeCalculator.calculateSize(holdersize, 0.5f, 0.35f);
-		VectorF2 rtpanelsize = SizeCalculator.calculateSize(holdersize, 0.05f, 0.1f);
+		VectorF2 rtpanelsize = SizeCalculator.calculateSize(holdersize, 0.075f, 0.15f);
 		VectorF2 cipanelsize = rtpanelsize.clone();
 		VectorF2 offerbuttonsize = new VectorF2(150, 30);
 		VectorF2 cancelbuttonsize = new VectorF2(150, 30);
 		
 		//Locations
 		VectorF2 titlelabelpos = LocationCalculator.calculateLocation(titlelabelsize, holdersize, LocationType.CENTER, 0.05f);
-		VectorF2 techlabelpos = LocationCalculator.calculateLocation(techlabelsize, holdersize, LocationType.ONE_EIGHTH, 0.57f);
-		VectorF2 improvlabelpos = LocationCalculator.calculateLocation(improvlabelsize, holdersize, LocationType.ONE_EIGHTH, 0.72f);
+		VectorF2 techlabelpos = LocationCalculator.calculateLocation(techlabelsize, holdersize, 0.125f, 0.575f);
+		VectorF2 improvlabelpos = LocationCalculator.calculateLocation(improvlabelsize, holdersize, 0.075f, 0.725f);
 		VectorF2 dimagepos = LocationCalculator.calculateLocation(dimagesize, holdersize, LocationType.CENTER, 0.125f);
 		VectorF2 firstrtpanelpos = LocationCalculator.calculateLocation(rtpanelsize, holdersize, 0.35f, 0.545f);
 		VectorF2 firstcipanelpos = LocationCalculator.calculateLocation(cipanelsize, holdersize, 0.35f, 0.695f);
-		VectorF2 offerbuttonpos = LocationCalculator.calculateLocation(offerbuttonsize, holdersize, 0.75f, 0.85f);
-		VectorF2 cancelbuttonpos = LocationCalculator.calculateLocation(cancelbuttonsize, holdersize, 0.55f, 0.85f);
+		VectorF2 offerbuttonpos = LocationCalculator.calculateLocation(offerbuttonsize, holdersize, 0.575f, 0.875f);
+		VectorF2 cancelbuttonpos = LocationCalculator.calculateLocation(cancelbuttonsize, holdersize, 0.775f, 0.875f);
 		
 		//Add labels
 		this.titleLabel = new JLabel(titleText);
@@ -110,7 +109,7 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		this.add(districtImage);
 		
 		//Add technology panels
-		int rtpaneldistance = 120;
+		int rtpaneldistance = 100;
 		this.rtpanels = new RadioTechnologyPanel[technologies.length];
 		this.radioButtonGroup = new ButtonGroup();
 		for(int i = 0; i < technologies.length; i++)
@@ -125,7 +124,7 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		}
 		
 		//Add improvement panels
-		int cipaneldistance = 120;
+		int cipaneldistance = 100;
 		this.cipanels = new CheckImprovementPanel[improvements.length];
 		for(int i = 0; i < improvements.length; i++)
 		{
