@@ -26,11 +26,11 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 {
 	protected District district;
 	
-	protected JLabel nameLabel, happinessLabel, roundOfferLabel, acceptedOfferLabel;
+	protected JLabel nameLabel, happinessLabel, roundOfferLabel;
 	protected JButton offerButton;
 	protected BufferedImageJPanel image;
 	protected HappinessPanel happinessPanel;
-	protected ProductOfferCollectionPanel roundOffersPanel, acceptedOffersPanel;
+	protected ProductOfferCollectionPanel roundOffersPanel;
 	
 	public DistrictPanel(Dimension size, District district, ActionListener actionListener)
 	{
@@ -43,41 +43,37 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 	
 	private void initialize(Dimension size, ActionListener actionListener)
 	{
+		HashMap<ProductOffer, Integer> roundOfferMap = TeamManager.getInstance().getRoundOfferMapForDistrict(district.getID());
+		boolean roundOfferMapEmpty = roundOfferMap.isEmpty();
 		int width = size.width;
 		int height = size.height;
-		FontMetrics smallFontMetrics = this.getFontMetrics(Content.smallFont);
 		FontMetrics mediumFontMetrics = this.getFontMetrics(Content.mediumFont);
 		
 		this.setLayout(null);
 		
 		//Text
-		String nameLabelText = district.getName();
+		String nameLabelText = "District: " + district.getName();
 		String happinessLabelText = "Happiness level";
-		String roundOfferLabelText = "Unprocessed product offers";
-		String acceptedOfferLabelText = "Accepted product offers";
+		String roundOfferLabelText = "This years' product introductions";
 		
 		//Sizes
 		VectorF2 holdersize = new VectorF2(width, height);
 		VectorF2 namelabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(nameLabelText), 30), holdersize);
-		VectorF2 hlabelsize = SizeCalculator.calculateSize(new VectorF2(smallFontMetrics.stringWidth(happinessLabelText), 20), holdersize);
+		VectorF2 hlabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(happinessLabelText), 20), holdersize);
 		VectorF2 roundofferlabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(roundOfferLabelText), 30), holdersize);
-		VectorF2 accofferlabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(acceptedOfferLabelText), 30), holdersize);
-		VectorF2 offerbuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 28), holdersize);
-		VectorF2 imagesize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.18f);
-		VectorF2 hpanelsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.025f);
-		VectorF2 roundofferpanelsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.16f);
-		VectorF2 accofferpanelsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.32f);
+		VectorF2 offerbuttonsize = SizeCalculator.calculateSize(new VectorF2(150, 28), holdersize);
+		VectorF2 imagesize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.22f);
+		VectorF2 hpanelsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.08f);
+		VectorF2 roundofferpanelsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.35f);
 		
 		//Locations
 		VectorF2 namelabelpos = LocationCalculator.calculateLocation(namelabelsize, holdersize, LocationType.CENTER, 0.02f);
-		VectorF2 hlabelpos = LocationCalculator.calculateLocation(hlabelsize, holdersize, LocationType.CENTER, 0.2475f);
-		VectorF2 roundofferlabelpos = LocationCalculator.calculateLocation(roundofferlabelsize, holdersize, LocationType.CENTER, 0.37f);
-		VectorF2 accofferlabelpos = LocationCalculator.calculateLocation(accofferlabelsize, holdersize, LocationType.CENTER, 0.6f);
-		VectorF2 offerbuttonpos = LocationCalculator.calculateLocation(offerbuttonsize, holdersize, LocationType.CENTER, 0.31f);
-		VectorF2 imagepos = LocationCalculator.calculateLocation(imagesize, holdersize, LocationType.CENTER, 0.06f);
-		VectorF2 hpanelpos = LocationCalculator.calculateLocation(hpanelsize, holdersize, LocationType.CENTER, 0.25f);
-		VectorF2 roundofferppos = LocationCalculator.calculateLocation(roundofferpanelsize, holdersize, LocationType.CENTER, 0.41f);
-		VectorF2 accofferppos = LocationCalculator.calculateLocation(accofferpanelsize, holdersize, LocationType.CENTER, 0.64f);
+		VectorF2 hlabelpos = LocationCalculator.calculateLocation(hlabelsize, holdersize, LocationType.CENTER, 0.33f);
+		VectorF2 roundofferlabelpos = LocationCalculator.calculateLocation(roundofferlabelsize, holdersize, LocationType.CENTER, 0.55f);
+		VectorF2 offerbuttonpos = LocationCalculator.calculateLocation(offerbuttonsize, holdersize, LocationType.CENTER, 0.46f);
+		VectorF2 imagepos = LocationCalculator.calculateLocation(imagesize, holdersize, LocationType.CENTER, 0.075f);
+		VectorF2 hpanelpos = LocationCalculator.calculateLocation(hpanelsize, holdersize, LocationType.CENTER, 0.325f);
+		VectorF2 roundofferppos = LocationCalculator.calculateLocation(roundofferpanelsize, holdersize, LocationType.CENTER, 0.6f);
 		
 		//Insert labels
 		this.nameLabel = new JLabel(nameLabelText);
@@ -88,27 +84,22 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		this.happinessLabel = new JLabel(happinessLabelText);
 		ComponentUtil.setComponentBounds(happinessLabel, hlabelsize, hlabelpos);
 		this.happinessLabel.setForeground(Color.white);
-		this.happinessLabel.setFont(Content.smallFont);
+		this.happinessLabel.setFont(Content.mediumFont);
 		this.add(happinessLabel);
 		this.roundOfferLabel = new JLabel(roundOfferLabelText);
 		ComponentUtil.setComponentBounds(roundOfferLabel, roundofferlabelsize, roundofferlabelpos);
 		this.roundOfferLabel.setForeground(Color.white);
 		this.roundOfferLabel.setFont(Content.mediumFont);
 		this.roundOfferLabel.setToolTipText("These are the product offers made in the current round. They will be processed when the round ends.");
-		this.add(roundOfferLabel);
-		this.acceptedOfferLabel = new JLabel(acceptedOfferLabelText);
-		ComponentUtil.setComponentBounds(acceptedOfferLabel, accofferlabelsize, accofferlabelpos);
-		this.acceptedOfferLabel.setForeground(Color.white);
-		this.acceptedOfferLabel.setFont(Content.mediumFont);
-		this.acceptedOfferLabel.setToolTipText("These are the product offers that were accepted in previous rounds.");
-		this.add(acceptedOfferLabel);
+		if(!roundOfferMapEmpty)
+			this.add(roundOfferLabel);
 		
 		//Insert buttons
-		this.offerButton = new JButton("Offer product");
+		this.offerButton = new JButton("Introduce product");
 		ComponentUtil.setComponentBounds(offerButton, offerbuttonsize, offerbuttonpos);
 		this.offerButton.setActionCommand(DistrictManager.districtOfferActionCommand + district.getID());
 		this.offerButton.addActionListener(actionListener);
-		this.offerButton.setToolTipText("Offer a new product to district " + district.getName() + ".");
+		this.offerButton.setToolTipText("Introduce a new product to district " + district.getName() + ".");
 		this.add(offerButton);
 		
 		//Insert image
@@ -123,13 +114,9 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		this.add(happinessPanel);
 		
 		//Insert productoffer panels
-		HashMap<ProductOffer, Integer> roundOfferMap = TeamManager.getInstance().getRoundOfferMapForDistrict(district.getID());
-		HashMap<ProductOffer, Integer> acceptedOfferMap = TeamManager.getInstance().getAcceptedOfferMapForDistrict(district.getID());
 		this.roundOffersPanel = new ProductOfferCollectionPanel(new Dimension((int)roundofferpanelsize.x, (int)roundofferpanelsize.y), roundOfferMap);
 		ComponentUtil.setComponentBounds(roundOffersPanel, roundofferpanelsize, roundofferppos);
-		this.add(roundOffersPanel);
-		this.acceptedOffersPanel = new ProductOfferCollectionPanel(new Dimension((int)accofferpanelsize.x, (int)accofferpanelsize.y), acceptedOfferMap);
-		ComponentUtil.setComponentBounds(acceptedOffersPanel, accofferpanelsize, accofferppos);
-		this.add(acceptedOffersPanel);
+		if(!roundOfferMapEmpty)
+			this.add(roundOffersPanel);
 	}
 }

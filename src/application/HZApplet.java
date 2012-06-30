@@ -104,7 +104,7 @@ public class HZApplet extends JApplet implements IScreenDisplayController
 	@Override
 	public void insertEndOfRoundScreen()
 	{
-		insertAScreen(this.mainScreen = new EndOfRoundScreen(backgroundPanel.getSize(), currentRoundNumber));
+		insertAScreen(this.mainScreen = new EndOfRoundScreen(backgroundPanel.getSize(), this, currentRoundNumber));
 	}
 	
 	

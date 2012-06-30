@@ -46,21 +46,21 @@ public class OverviewScreen extends AScreen
 		//Sizes
 		VectorF2 holdersize = new VectorF2(width, height);
 		VectorF2 rlabelsize = SizeCalculator.calculateSize(new VectorF2(1, 1), holdersize); //size set on text set.
-		VectorF2 nextbuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 30), holdersize);
-		VectorF2 unlockundobuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 30), holdersize);
-		VectorF2 undobuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 30), holdersize);
-		VectorF2 previousbuttonsize = SizeCalculator.calculateSize(new VectorF2(170, 30), holdersize);
-		VectorF2 dpanelsize = SizeCalculator.calculateSize(holdersize, 0.275f, 0.835f);
+		VectorF2 nextbuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 28), holdersize);
+		VectorF2 unlockundobuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 28), holdersize);
+		VectorF2 undobuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 28), holdersize);
+		VectorF2 previousbuttonsize = SizeCalculator.calculateSize(new VectorF2(170, 28), holdersize);
+		VectorF2 dpanelsize = SizeCalculator.calculateSize(holdersize, 0.25f, 0.7f);
 		
 		//Locations
-		VectorF2 rlabelpos = LocationCalculator.calculateLocation(rlabelsize, holdersize, LocationType.CENTER, 0.03f); //location set on text set
-		VectorF2 nextbuttonpos = LocationCalculator.calculateLocationWithMargins(nextbuttonsize, holdersize, LocationType.END, 0.03f, new VectorF2(18,0));
-		VectorF2 unlockundobuttonpos = LocationCalculator.calculateLocation(undobuttonsize, holdersize, 0.6f, 0.03f);
-		VectorF2 undobuttonpos = LocationCalculator.calculateLocation(undobuttonsize, holdersize, 0.7f, 0.03f);
-		VectorF2 previousbuttonpos = LocationCalculator.calculateLocationWithMargins(previousbuttonsize, holdersize, LocationType.BEGIN, 0.03f, new VectorF2(18,0));
+		VectorF2 rlabelpos = LocationCalculator.calculateLocation(rlabelsize, holdersize, LocationType.CENTER, 0.01f); //location set on text set
+		VectorF2 nextbuttonpos = LocationCalculator.calculateLocationWithMargins(nextbuttonsize, holdersize, LocationType.END, 0.015f, new VectorF2(18,0));
+		VectorF2 unlockundobuttonpos = LocationCalculator.calculateLocation(undobuttonsize, holdersize, 0.6f, 0.015f);
+		VectorF2 undobuttonpos = LocationCalculator.calculateLocation(undobuttonsize, holdersize, 0.7f, 0.015f);
+		VectorF2 previousbuttonpos = LocationCalculator.calculateLocationWithMargins(previousbuttonsize, holdersize, LocationType.BEGIN, 0.015f, new VectorF2(18,0));
 		VectorF2[] dispposarray = new VectorF2[districts.length];
 		for(int i = 0; i < districts.length; i++)
-			dispposarray[i] = LocationCalculator.calculateLocation(dpanelsize, holdersize, 0.05f + (i * 0.3125f), 0.115f);
+			dispposarray[i] = LocationCalculator.calculateLocation(dpanelsize, holdersize, 0.06f + (i * 0.3125f), 0.115f);
 		
 		//Insert label
 		this.roundLabel = new JLabel();
@@ -70,7 +70,7 @@ public class OverviewScreen extends AScreen
 		this.add(roundLabel);
 		
 		//Insert buttons
-		this.nextRoundButton = new JButton("Next Round");
+		this.nextRoundButton = new JButton("Next Year");
 		ComponentUtil.setComponentBounds(nextRoundButton, nextbuttonsize, nextbuttonpos);
 		this.nextRoundButton.setActionCommand(OverviewController.nextRoundActionCommand);
 		this.nextRoundButton.addActionListener(overviewController);
@@ -80,7 +80,7 @@ public class OverviewScreen extends AScreen
 		this.unlockUndoButton.setActionCommand(OverviewController.unlockResetActionCommand);
 		this.unlockUndoButton.addActionListener(overviewController);
 		this.add(unlockUndoButton);
-		this.undoRoundButton = new JButton("Reset Round");
+		this.undoRoundButton = new JButton("Reset Year");
 		ComponentUtil.setComponentBounds(undoRoundButton, undobuttonsize, undobuttonpos);
 		this.undoRoundButton.setEnabled(false);
 		this.undoRoundButton.setActionCommand(OverviewController.resetRoundActionCommand);
@@ -113,13 +113,13 @@ public class OverviewScreen extends AScreen
 		FontMetrics largeFontMetrics = this.getFontMetrics(Content.largeFont);
 		
 		//Calculate the new size and location of the label based on the text size.
-		String text = "Round " + round;
+		String text = "Year " + round;
 		VectorF2 holdersize = new VectorF2(this.getWidth(), this.getHeight());
 		VectorF2 size = SizeCalculator.calculateSize(new VectorF2(largeFontMetrics.stringWidth(text), 30), holdersize);
-		VectorF2 location = LocationCalculator.calculateLocation(size, holdersize, LocationType.CENTER, 0.03f);
+		VectorF2 location = LocationCalculator.calculateLocation(size, holdersize, LocationType.CENTER, 0.0175f);
 		
 		//Change text and position/location of the label.
-		this.roundLabel.setText("Round " + round);
+		this.roundLabel.setText(text);
 		ComponentUtil.setComponentBounds(roundLabel, size, location);
 	}
 	

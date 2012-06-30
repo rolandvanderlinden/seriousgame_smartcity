@@ -121,4 +121,19 @@ public class ProductOfferCollectionPanel extends JPanel
 			this.offerPanel = null;
 		}
 	}
+	
+	@Override
+	public void setVisible(boolean visible)
+	{
+		super.setVisible(visible);
+		
+		if(scrollPane != null)
+		{
+			scrollPane.setVisible(visible);
+			scrollPane.getViewport().setVisible(visible);
+		}
+		
+		if(offerPanel != null)
+			offerPanel.setVisible(visible);
+	}
 }

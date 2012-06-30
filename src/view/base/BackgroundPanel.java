@@ -38,10 +38,10 @@ public class BackgroundPanel extends JPanel
 		this.setOpaque(false);
 		
 		//Define the sizes that we'll use for the gui.
-		int leftsize = 16;
-		int rightsize = 16;
-		int topsize = 80;
-		int bottomsize = 16;
+		int leftsize = 14;
+		int rightsize = 14;
+		int topsize = 50;
+		int bottomsize = 14;
 		int bordersize = outerborder;
 		int width = this.getWidth();
 		int height = this.getHeight();
