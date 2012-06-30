@@ -41,27 +41,28 @@ public class DistrictAcceptancePanel extends TranslucentBufferedImageJPanel
 		this.setLayout(null);
 		this.setSize(size);
 		FontMetrics mediumFontMetrics = this.getFontMetrics(Content.mediumFont);
+		FontMetrics largeFontMetrics = this.getFontMetrics(Content.largeFont);
 		
 		//Text
-		String nameLabelText = district.getName();
+		String nameLabelText = "District: " + district.getName();
 		String happinessLabelText = "Happiness change";
 
 		//Sizes
 		VectorF2 holdersize = new VectorF2(size.width, size.height);
-		VectorF2 namelabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(nameLabelText), 30), holdersize);
+		VectorF2 namelabelsize = SizeCalculator.calculateSize(new VectorF2(largeFontMetrics.stringWidth(nameLabelText), 30), holdersize);
 		VectorF2 hlabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(happinessLabelText), 30), holdersize);
-		VectorF2 acceptancepsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.5f);
+		VectorF2 acceptancepsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.65f);
 		
 		//Locations
 		VectorF2 namelabelpos = LocationCalculator.calculateLocation(namelabelsize, holdersize, LocationType.CENTER, 0.05f);
-		VectorF2 hlabelpos = LocationCalculator.calculateLocation(hlabelsize, holdersize, LocationType.CENTER, 0.8f);
-		VectorF2 acceptanceppos = LocationCalculator.calculateLocation(acceptancepsize, holdersize, LocationType.CENTER, 0.15f);
+		VectorF2 hlabelpos = LocationCalculator.calculateLocation(hlabelsize, holdersize, LocationType.CENTER, 0.85f);
+		VectorF2 acceptanceppos = LocationCalculator.calculateLocation(acceptancepsize, holdersize, LocationType.CENTER, 0.16f);
 	
 		//Insert labels
 		this.nameLabel = new JLabel(nameLabelText);
 		ComponentUtil.setComponentBounds(nameLabel, namelabelsize, namelabelpos);
 		this.nameLabel.setForeground(Color.white);
-		this.nameLabel.setFont(Content.mediumFont);
+		this.nameLabel.setFont(Content.largeFont);
 		this.add(nameLabel);
 		this.happinessLabel = new JLabel(happinessLabelText);
 		ComponentUtil.setComponentBounds(happinessLabel, hlabelsize, hlabelpos);

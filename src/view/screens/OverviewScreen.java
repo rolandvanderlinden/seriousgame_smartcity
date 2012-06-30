@@ -61,7 +61,7 @@ public class OverviewScreen extends AScreen
 		VectorF2 hpanelsize = SizeCalculator.calculateSize(holdersize, 0.7f, 0.09f);
 		
 		//Locations
-		VectorF2 rlabelpos = LocationCalculator.calculateLocation(rlabelsize, holdersize, LocationType.CENTER, 0.01f); //location set on text set
+		VectorF2 rlabelpos = LocationCalculator.calculateLocation(rlabelsize, holdersize, LocationType.CENTER, 0.009f); //location set on text set
 		VectorF2 nextbuttonpos = LocationCalculator.calculateLocationWithMargins(nextbuttonsize, holdersize, LocationType.END, 0.015f, new VectorF2(18,0));
 		VectorF2 unlockundobuttonpos = LocationCalculator.calculateLocation(undobuttonsize, holdersize, 0.015f, 0.015f);
 		VectorF2 undobuttonpos = LocationCalculator.calculateLocation(undobuttonsize, holdersize, 0.13f, 0.015f);
@@ -76,7 +76,7 @@ public class OverviewScreen extends AScreen
 		this.roundLabel = new JLabel();
 		ComponentUtil.setComponentBounds(roundLabel, rlabelsize, rlabelpos);
 		this.roundLabel.setForeground(Color.white);
-		this.roundLabel.setFont(Content.largeFont);
+		this.roundLabel.setFont(Content.hugeFont);
 		this.add(roundLabel);
 		this.happinessLabel = new JLabel(happinessText);
 		ComponentUtil.setComponentBounds(happinessLabel, hlabelsize, hlabelpos);
@@ -131,12 +131,12 @@ public class OverviewScreen extends AScreen
 	 */
 	public void setRound(int round)
 	{
-		FontMetrics largeFontMetrics = this.getFontMetrics(Content.largeFont);
+		FontMetrics hugeFontMetrics = this.getFontMetrics(Content.hugeFont);
 		
 		//Calculate the new size and location of the label based on the text size.
 		String text = "Year " + round;
 		VectorF2 holdersize = new VectorF2(this.getWidth(), this.getHeight());
-		VectorF2 size = SizeCalculator.calculateSize(new VectorF2(largeFontMetrics.stringWidth(text), 30), holdersize);
+		VectorF2 size = SizeCalculator.calculateSize(new VectorF2(hugeFontMetrics.stringWidth(text), 30), holdersize);
 		VectorF2 location = LocationCalculator.calculateLocation(size, holdersize, LocationType.CENTER, 0.0175f);
 		
 		//Change text and position/location of the label.

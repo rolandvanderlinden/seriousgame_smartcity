@@ -52,19 +52,20 @@ public class AcceptanceCollectionPanel extends JPanel
 		
 		//Sizes of items & panels
 		VectorF2 holdersize = new VectorF2(this.getWidth(), this.getHeight());
-		VectorF2 entrysize = new VectorF2(holdersize.x - 18, 30);
-		VectorF2 panelsize = new VectorF2(holdersize.x - 18, data.size() * entrysize.y);
-		VectorF2 imagesize = new VectorF2(40, 0.75f * entrysize.y);
+		float initialY = 5;
+		VectorF2 entrysize = new VectorF2(holdersize.x - 18, 40);
+		VectorF2 panelsize = new VectorF2(holdersize.x - 18, initialY + (data.size() * entrysize.y));
+		VectorF2 imagesize = new VectorF2(50, 0.75f * entrysize.y);
 		VectorF2 countsize = new VectorF2(30, 20);
 		VectorF2 acceptancesize = new VectorF2(120, 20);
 				
 		//Locations & distances
 		float imageX = 25;
 		float imageY = 0.1f * entrysize.y;
-		float countX = 90;
-		float countY = 0.15f * entrysize.y;
-		float acceptanceX = 140;
-		float acceptanceY = 0.15f * entrysize.y;
+		float countX = 100;
+		float countY = 0.2f * entrysize.y;
+		float acceptanceX = 150;
+		float acceptanceY = 0.2f * entrysize.y;
 		
 		//Create the acceptance panel
 		this.acceptancePanel = new JPanel();
@@ -82,37 +83,37 @@ public class AcceptanceCollectionPanel extends JPanel
 			boolean accepted = ad.accepted;
 			
 			//Insert product image
-			VectorF2 imagepos = new VectorF2(imageX, imageY + (index * entrysize.y));
+			VectorF2 imagepos = new VectorF2(imageX, initialY + imageY + (index * entrysize.y));
 			BufferedImageJPanel productImage = new BufferedImageJPanel(ProductManager.getProductResourceInfo(po.getProduct()));
 			ComponentUtil.setComponentBounds(productImage, imagesize, imagepos);
 			productImage.setToolTipText(po.getProduct().toString());
 			acceptancePanel.add(productImage);
 			
 			//Insert count label
-			VectorF2 countpos = new VectorF2(countX, countY + (index * entrysize.y));
+			VectorF2 countpos = new VectorF2(countX, initialY + countY + (index * entrysize.y));
 			JLabel countLabel = new JLabel("" + count);
 			countLabel.setForeground(Color.white);
-			countLabel.setFont(Content.smallFont);
-			countLabel.setToolTipText("The number of product offers of type " + po.getProduct().toString());
+			countLabel.setFont(Content.mediumFont);
+			countLabel.setToolTipText("The number of product introductions of type " + po.getProduct().toString());
 			ComponentUtil.setComponentBounds(countLabel, countsize, countpos);
 			acceptancePanel.add(countLabel);
 			
 			//Insert acceptance label
-			VectorF2 acceptancepos = new VectorF2(acceptanceX, acceptanceY + (index * entrysize.y));
+			VectorF2 acceptancepos = new VectorF2(acceptanceX, initialY + acceptanceY + (index * entrysize.y));
 			JLabel acceptanceLabel = new JLabel();
-			acceptanceLabel.setFont(Content.smallFont);
+			acceptanceLabel.setFont(Content.mediumFont);
 			ComponentUtil.setComponentBounds(acceptanceLabel, acceptancesize, acceptancepos);
 			if(accepted)
 			{
 				acceptanceLabel.setText("Accepted");
 				acceptanceLabel.setForeground(Color.green);
-				acceptanceLabel.setToolTipText("District " + po.getDistrict().getName() + " accepted productoffer " + po.toString() + ".");				
+				acceptanceLabel.setToolTipText("District " + po.getDistrict().getName() + " accepted product " + po.getProduct().toString() + ".");				
 			}
 			else
 			{
 				acceptanceLabel.setText("Rejected");
 				acceptanceLabel.setForeground(Color.red);
-				acceptanceLabel.setToolTipText("District " + po.getDistrict().getName() + " rejected productoffer " + po.toString() + ".");			
+				acceptanceLabel.setToolTipText("District " + po.getDistrict().getName() + " rejected product " + po.getProduct().toString() + ".");			
 			}
 			acceptancePanel.add(acceptanceLabel);
 			

@@ -45,7 +45,7 @@ public class EndOfRoundScreen extends AScreen
 		VectorF2 cancelbuttonsize = new VectorF2(100, 30);
 		VectorF2 unlockbuttonsize = new VectorF2(140, 30);
 		VectorF2 advancebuttonsize = new VectorF2(180, 30);
-		VectorF2 aopsize = SizeCalculator.calculateSize(holdersize, 1f, 0.9f);
+		VectorF2 aopsize = SizeCalculator.calculateSize(holdersize, 1f, 0.935f);
 		
 		//Locations
 		VectorF2 cancelbuttonpos = LocationCalculator.calculateLocation(cancelbuttonsize, holdersize, 0.015f, 0.015f);

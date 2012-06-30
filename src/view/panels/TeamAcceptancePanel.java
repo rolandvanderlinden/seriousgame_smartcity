@@ -26,7 +26,7 @@ public class TeamAcceptancePanel extends TranslucentBufferedImageJPanel
 	
 	public TeamAcceptancePanel(Dimension size, Team team, ArrayList<AcceptanceData> data, int fundschange)
 	{
-		super(Content.black, 0.5f);
+		super(Content.lightblue, 0.1f);
 		
 		this.team = team;
 		
@@ -35,12 +35,12 @@ public class TeamAcceptancePanel extends TranslucentBufferedImageJPanel
 
 	private void initialize(Dimension size, ArrayList<AcceptanceData> data, int fundschange)
 	{
-		FontMetrics mediumFontMetrics = this.getFontMetrics(Content.mediumFont);
-		
 		this.setLayout(null);
+		FontMetrics mediumFontMetrics = this.getFontMetrics(Content.mediumFont);
+		FontMetrics largeFontMetrics = this.getFontMetrics(Content.largeFont);
 		
 		//Text
-		String nameLabelText = team.getName();
+		String nameLabelText = "Company: " + team.getName();
 		String fundsLabelText = "Funds: ";
 		String fundsAdditionLabelText = "" + fundschange;
 		if(fundschange > 0)
@@ -48,22 +48,22 @@ public class TeamAcceptancePanel extends TranslucentBufferedImageJPanel
 			
 		//Sizes
 		VectorF2 holdersize = new VectorF2(size.width, size.height);
-		VectorF2 namelabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(nameLabelText), 30), holdersize);
+		VectorF2 namelabelsize = SizeCalculator.calculateSize(new VectorF2(largeFontMetrics.stringWidth(nameLabelText), 30), holdersize);
 		VectorF2 flabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(fundsLabelText), 30), holdersize);
 		VectorF2 faddlabelsize = SizeCalculator.calculateSize(new VectorF2(mediumFontMetrics.stringWidth(fundsAdditionLabelText), 30), holdersize);
-		VectorF2 acceptancepsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.5f);
+		VectorF2 acceptancepsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.65f);
 		
 		//Locations
 		VectorF2 namelabelpos = LocationCalculator.calculateLocation(namelabelsize, holdersize, LocationType.CENTER, 0.05f);
-		VectorF2 flabelpos = LocationCalculator.calculateLocation(flabelsize, holdersize, LocationType.CENTER, 0.8f);
-		VectorF2 faddlabelpos = LocationCalculator.calculateLocation(faddlabelsize, holdersize, LocationType.FIVE_EIGHTS, 0.8f);
-		VectorF2 acceptanceppos = LocationCalculator.calculateLocation(acceptancepsize, holdersize, LocationType.CENTER, 0.15f);
+		VectorF2 flabelpos = LocationCalculator.calculateLocation(flabelsize, holdersize, LocationType.CENTER, 0.85f);
+		VectorF2 faddlabelpos = LocationCalculator.calculateLocation(faddlabelsize, holdersize, LocationType.FIVE_EIGHTS, 0.85f);
+		VectorF2 acceptanceppos = LocationCalculator.calculateLocation(acceptancepsize, holdersize, LocationType.CENTER, 0.16f);
 	
 		//Insert labels
 		this.nameLabel = new JLabel(nameLabelText);
 		ComponentUtil.setComponentBounds(nameLabel, namelabelsize, namelabelpos);
 		this.nameLabel.setForeground(Color.white);
-		this.nameLabel.setFont(Content.mediumFont);
+		this.nameLabel.setFont(Content.largeFont);
 		this.add(nameLabel);
 		this.fundsLabel = new JLabel(fundsLabelText);
 		ComponentUtil.setComponentBounds(fundsLabel, flabelsize, flabelpos);

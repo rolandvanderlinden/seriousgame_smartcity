@@ -21,22 +21,25 @@ import util.SizeCalculator;
 import view.components.BufferedImageJPanel;
 import view.components.TranslucentBufferedImageJPanel;
 import content.Content;
+import controller.contentloader.ImageLoader;
 import controller.screens.ProductOfferController;
 
 public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 {
 	public final static String offerProductActionCommand = "offerproduct";
 	public final static String cancelOfferActionCommand = "canceloffer";
+	public final static String lessActionCommand = "less";
+	public final static String moreActionCommand = "more";
 	
 	protected ProductOfferController productOfferController;
 	protected District district;
 	
-	protected JLabel titleLabel, technologyLabel, improvementLabel;
+	protected JLabel titleLabel, technologyLabel, improvementLabel, quantityLabel, numberLabel;
 	protected BufferedImageJPanel districtImage;
 	protected RadioTechnologyPanel[] rtpanels;
 	protected ButtonGroup radioButtonGroup;
 	protected CheckImprovementPanel[] cipanels;
-	protected JButton offerButton, cancelButton;
+	protected JButton offerButton, cancelButton, lessButton, moreButton;
 	
 	public ProductOfferPanel(Dimension size, ProductOfferController productOfferController, District district)
 	{
@@ -59,30 +62,38 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		FontMetrics largeFontMetrics = this.getFontMetrics(Content.largeFont);
 		
 		//Text of labels
-		String titleText = "New product offer for district " + this.district.getName();
+		String titleText = "New product introduction for district " + this.district.getName();
 		String technologyText = "Technology";
 		String improvementText = "Technology Improvement";
+		String quantityText = "Quantity";
 		
 		//Sizes
 		VectorF2 holdersize = new VectorF2(this.getWidth(), this.getHeight());
 		VectorF2 titlelabelsize = new VectorF2(largeFontMetrics.stringWidth(titleText), 30);
 		VectorF2 techlabelsize = new VectorF2(mediumFontMetrics.stringWidth(technologyText), 20);
 		VectorF2 improvlabelsize = new VectorF2(mediumFontMetrics.stringWidth(improvementText), 20);
+		VectorF2 quantitylabelsize = new VectorF2(mediumFontMetrics.stringWidth(quantityText), 20);
 		VectorF2 dimagesize = SizeCalculator.calculateSize(holdersize, 0.5f, 0.35f);
-		VectorF2 rtpanelsize = SizeCalculator.calculateSize(holdersize, 0.075f, 0.15f);
+		VectorF2 rtpanelsize = SizeCalculator.calculateSize(holdersize, 0.075f, 0.14f);
 		VectorF2 cipanelsize = rtpanelsize.clone();
 		VectorF2 offerbuttonsize = new VectorF2(150, 30);
 		VectorF2 cancelbuttonsize = new VectorF2(150, 30);
+		VectorF2 numberlabelsize = new VectorF2(20, 20);
+		VectorF2 morelessbuttonsize = new VectorF2(30,30);
 		
 		//Locations
 		VectorF2 titlelabelpos = LocationCalculator.calculateLocation(titlelabelsize, holdersize, LocationType.CENTER, 0.05f);
-		VectorF2 techlabelpos = LocationCalculator.calculateLocation(techlabelsize, holdersize, 0.125f, 0.575f);
-		VectorF2 improvlabelpos = LocationCalculator.calculateLocation(improvlabelsize, holdersize, 0.075f, 0.725f);
+		VectorF2 techlabelpos = LocationCalculator.calculateLocation(techlabelsize, holdersize, 0.125f, 0.52f);
+		VectorF2 improvlabelpos = LocationCalculator.calculateLocation(improvlabelsize, holdersize, 0.075f, 0.67f);
+		VectorF2 quantitylabelpos = LocationCalculator.calculateLocation(quantitylabelsize, holdersize, 0.13f, 0.82f);
 		VectorF2 dimagepos = LocationCalculator.calculateLocation(dimagesize, holdersize, LocationType.CENTER, 0.125f);
-		VectorF2 firstrtpanelpos = LocationCalculator.calculateLocation(rtpanelsize, holdersize, 0.35f, 0.545f);
-		VectorF2 firstcipanelpos = LocationCalculator.calculateLocation(cipanelsize, holdersize, 0.35f, 0.695f);
-		VectorF2 offerbuttonpos = LocationCalculator.calculateLocation(offerbuttonsize, holdersize, 0.575f, 0.875f);
-		VectorF2 cancelbuttonpos = LocationCalculator.calculateLocation(cancelbuttonsize, holdersize, 0.775f, 0.875f);
+		VectorF2 firstrtpanelpos = LocationCalculator.calculateLocation(rtpanelsize, holdersize, 0.35f, 0.49f);
+		VectorF2 firstcipanelpos = LocationCalculator.calculateLocation(cipanelsize, holdersize, 0.35f, 0.64f);
+		VectorF2 offerbuttonpos = LocationCalculator.calculateLocation(offerbuttonsize, holdersize, 0.6f, 0.9f);
+		VectorF2 cancelbuttonpos = LocationCalculator.calculateLocation(cancelbuttonsize, holdersize, 0.8f, 0.9f);
+		VectorF2 numberlabelpos = LocationCalculator.calculateLocation(numberlabelsize, holdersize, 0.42f, 0.82f);
+		VectorF2 lessbuttonpos = LocationCalculator.calculateLocation(morelessbuttonsize, holdersize, 0.36f, 0.82f);
+		VectorF2 morebuttonpos = LocationCalculator.calculateLocation(morelessbuttonsize, holdersize, 0.44f, 0.82f);
 		
 		//Add labels
 		this.titleLabel = new JLabel(titleText);
@@ -94,7 +105,7 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		ComponentUtil.setComponentBounds(technologyLabel, techlabelsize, techlabelpos);
 		this.technologyLabel.setForeground(Color.white);
 		this.technologyLabel.setFont(Content.mediumFont);
-		this.technologyLabel.setToolTipText("Select the technology to offer.");
+		this.technologyLabel.setToolTipText("Select the technology to be introduced.");
 		this.add(technologyLabel);
 		this.improvementLabel = new JLabel(improvementText);
 		ComponentUtil.setComponentBounds(improvementLabel, improvlabelsize, improvlabelpos);
@@ -102,6 +113,12 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		this.improvementLabel.setFont(Content.mediumFont);
 		this.improvementLabel.setToolTipText("Select one or more technology improvements (optional).");
 		this.add(improvementLabel);
+		this.quantityLabel = new JLabel(quantityText);
+		ComponentUtil.setComponentBounds(quantityLabel, quantitylabelsize, quantitylabelpos);
+		this.quantityLabel.setForeground(Color.white);
+		this.quantityLabel.setFont(Content.mediumFont);
+		this.quantityLabel.setToolTipText("The quantity of the products of this type you want to introduce.");
+		this.add(quantityLabel);
 		
 		//Add image
 		this.districtImage = new BufferedImageJPanel(DistrictManager.getDistrictResourceInfo(district));
@@ -137,18 +154,38 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 			this.add(cipanel);
 		}
 		
+		//Add quantity components
+		this.numberLabel = new JLabel("test");
+		ComponentUtil.setComponentBounds(numberLabel, numberlabelsize, numberlabelpos);
+		this.numberLabel.setForeground(Color.white);
+		this.numberLabel.setFont(Content.mediumFont);
+		this.numberLabel.setToolTipText("You plan to introduce " + numberLabel.getText() + " types of this product.");
+		this.add(numberLabel);
+		this.lessButton = new JButton(ImageLoader.Instance().loadImageIcon(Content.leftArrow));
+		ComponentUtil.setComponentBounds(lessButton, morelessbuttonsize, lessbuttonpos);
+		this.lessButton.addActionListener(productOfferController);
+		this.lessButton.setToolTipText("Decrease the number of products you want to introduce.");
+		this.lessButton.setActionCommand(lessActionCommand);
+		this.add(lessButton);
+		this.moreButton = new JButton(ImageLoader.Instance().loadImageIcon(Content.rightArrow));
+		ComponentUtil.setComponentBounds(moreButton, morelessbuttonsize, morebuttonpos);
+		this.moreButton.addActionListener(productOfferController);
+		this.moreButton.setToolTipText("Increase the number of products you want to introduce.");
+		this.moreButton.setActionCommand(moreActionCommand);
+		this.add(moreButton);
+		
 		//Add buttons
-		this.offerButton = new JButton("Offer product");
+		this.offerButton = new JButton("Introduce product");
 		ComponentUtil.setComponentBounds(offerButton, offerbuttonsize, offerbuttonpos);
 		this.offerButton.addActionListener(productOfferController);
-		this.offerButton.setToolTipText("The selected technology (and improvements) will be the product offer to district " + district.getName() + ".");
+		this.offerButton.setToolTipText("The selected technology (and improvements) will be the introduced product to district " + district.getName() + ".");
 		this.offerButton.setActionCommand(offerProductActionCommand);
 		this.offerButton.setEnabled(false);
 		this.add(offerButton);
-		this.cancelButton = new JButton("Cancel offer");
+		this.cancelButton = new JButton("Cancel");
 		ComponentUtil.setComponentBounds(cancelButton, cancelbuttonsize, cancelbuttonpos);
 		this.cancelButton.addActionListener(productOfferController);
-		this.cancelButton.setToolTipText("The offer will be cancelled. You will return to the overview screen.");
+		this.cancelButton.setToolTipText("The product introduction will be cancelled. You will return to the overview screen.");
 		this.cancelButton.setActionCommand(cancelOfferActionCommand);
 		this.add(cancelButton);
 	}
