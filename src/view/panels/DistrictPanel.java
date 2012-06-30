@@ -53,7 +53,7 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		
 		//Text
 		String nameLabelText = "District: " + district.getName();
-		String happinessLabelText = "Happiness level";
+		String happinessLabelText = "Happiness of " + district.getName();
 		String roundOfferLabelText = "This years' product introductions";
 		
 		//Sizes

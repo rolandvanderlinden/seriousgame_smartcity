@@ -55,9 +55,9 @@ public class ProductOfferCollectionPanel extends JPanel
 		
 		//Sizes of items & panels
 		VectorF2 holdersize = new VectorF2(this.getWidth(), this.getHeight());
-		VectorF2 entrysize = new VectorF2(holdersize.x - 18, 30);
+		VectorF2 entrysize = new VectorF2(holdersize.x - 18, 48);
 		VectorF2 panelsize = new VectorF2(holdersize.x - 18, productOffers.size() * entrysize.y);
-		VectorF2 imagesize = new VectorF2(40, 0.75f * entrysize.y);
+		VectorF2 imagesize = new VectorF2(56, 0.75f * entrysize.y);
 		VectorF2 countsize = new VectorF2(30, 20);
 				
 		//Locations & distances

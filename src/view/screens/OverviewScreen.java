@@ -14,6 +14,7 @@ import util.LocationCalculator;
 import util.LocationCalculator.LocationType;
 import util.SizeCalculator;
 import view.panels.DistrictPanel;
+import view.panels.HappinessPanel;
 import content.Content;
 import controller.screens.IScreenDisplayController;
 import controller.screens.OverviewController;
@@ -26,6 +27,7 @@ public class OverviewScreen extends AScreen
 	private JLabel roundLabel;
 	private JButton nextRoundButton, unlockUndoButton, undoRoundButton, previousResultsButton;
 	private DistrictPanel[] districtPanels;
+	private HappinessPanel happinessPanel;
 	private int roundNumber;
 	
 	public OverviewScreen(Dimension size, IScreenDisplayController screenDisplayController, District[] districts, int roundNumber)
@@ -51,6 +53,7 @@ public class OverviewScreen extends AScreen
 		VectorF2 undobuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 28), holdersize);
 		VectorF2 previousbuttonsize = SizeCalculator.calculateSize(new VectorF2(170, 28), holdersize);
 		VectorF2 dpanelsize = SizeCalculator.calculateSize(holdersize, 0.25f, 0.7f);
+		VectorF2 hpanelsize = SizeCalculator.calculateSize(holdersize, 0.8f, 0.08f);
 		
 		//Locations
 		VectorF2 rlabelpos = LocationCalculator.calculateLocation(rlabelsize, holdersize, LocationType.CENTER, 0.01f); //location set on text set
@@ -60,7 +63,8 @@ public class OverviewScreen extends AScreen
 		VectorF2 previousbuttonpos = LocationCalculator.calculateLocationWithMargins(previousbuttonsize, holdersize, LocationType.BEGIN, 0.015f, new VectorF2(18,0));
 		VectorF2[] dispposarray = new VectorF2[districts.length];
 		for(int i = 0; i < districts.length; i++)
-			dispposarray[i] = LocationCalculator.calculateLocation(dpanelsize, holdersize, 0.06f + (i * 0.3125f), 0.115f);
+			dispposarray[i] = LocationCalculator.calculateLocation(dpanelsize, holdersize, 0.06f + (i * 0.3125f), 0.105f);
+		VectorF2 hpanelpos = LocationCalculator.calculateLocation(hpanelsize, holdersize, LocationType.CENTER, 0.875f);
 		
 		//Insert label
 		this.roundLabel = new JLabel();
@@ -99,6 +103,12 @@ public class OverviewScreen extends AScreen
 			districtPanels[i] = dp;
 			this.add(dp);			
 		}		
+		
+		//Insert happinespanel
+		this.happinessPanel = new HappinessPanel(new Dimension((int)hpanelsize.x, (int)hpanelsize.y));
+		ComponentUtil.setComponentBounds(happinessPanel, hpanelsize, hpanelpos);
+		happinessPanel.setToolTipText("The level of happiness of the city.");
+		this.add(happinessPanel);
 		
 		//Start up some components
 		this.setRound(this.roundNumber);
