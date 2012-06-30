@@ -25,7 +25,7 @@ public class OverviewScreen extends AScreen
 	protected OverviewController overviewController;
 	
 	private JLabel roundLabel, happinessLabel;
-	private JButton nextRoundButton, unlockUndoButton, undoRoundButton, previousResultsButton;
+	private JButton nextRoundButton, unlockUndoButton, undoRoundButton;
 	private DistrictPanel[] districtPanels;
 	private HappinessPanel happinessPanel;
 	private int roundNumber;
@@ -55,7 +55,6 @@ public class OverviewScreen extends AScreen
 		VectorF2 nextbuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 28), holdersize);
 		VectorF2 unlockundobuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 28), holdersize);
 		VectorF2 undobuttonsize = SizeCalculator.calculateSize(new VectorF2(120, 28), holdersize);
-		VectorF2 previousbuttonsize = SizeCalculator.calculateSize(new VectorF2(170, 28), holdersize);
 		VectorF2 dpanelsize = SizeCalculator.calculateSize(holdersize, 0.25f, 0.7f);
 		VectorF2 hlabelsize = SizeCalculator.calculateSize(new VectorF2(hugeFontMetrics.stringWidth(happinessText), 30), holdersize);
 		VectorF2 hpanelsize = SizeCalculator.calculateSize(holdersize, 0.7f, 0.09f);
@@ -65,7 +64,6 @@ public class OverviewScreen extends AScreen
 		VectorF2 nextbuttonpos = LocationCalculator.calculateLocationWithMargins(nextbuttonsize, holdersize, LocationType.END, 0.015f, new VectorF2(18,0));
 		VectorF2 unlockundobuttonpos = LocationCalculator.calculateLocation(undobuttonsize, holdersize, 0.015f, 0.015f);
 		VectorF2 undobuttonpos = LocationCalculator.calculateLocation(undobuttonsize, holdersize, 0.13f, 0.015f);
-		VectorF2 previousbuttonpos = LocationCalculator.calculateLocationWithMargins(previousbuttonsize, holdersize, LocationType.BEGIN, 0.015f, new VectorF2(18,0));
 		VectorF2[] dispposarray = new VectorF2[districts.length];
 		for(int i = 0; i < districts.length; i++)
 			dispposarray[i] = LocationCalculator.calculateLocation(dpanelsize, holdersize, 0.06f + (i * 0.3125f), 0.105f);
@@ -85,25 +83,22 @@ public class OverviewScreen extends AScreen
 		this.add(happinessLabel);
 		
 		//Insert buttons
-		this.nextRoundButton = new JButton("Next Year");
+		this.nextRoundButton = new JButton("Next year");
 		ComponentUtil.setComponentBounds(nextRoundButton, nextbuttonsize, nextbuttonpos);
 		this.nextRoundButton.setActionCommand(OverviewController.nextRoundActionCommand);
 		this.nextRoundButton.addActionListener(overviewController);
 		this.add(nextRoundButton);
-		this.unlockUndoButton = new JButton("Unlock Reset");
+		this.unlockUndoButton = new JButton("Unlock reset");
 		ComponentUtil.setComponentBounds(unlockUndoButton, unlockundobuttonsize, unlockundobuttonpos);
 		this.unlockUndoButton.setActionCommand(OverviewController.unlockResetActionCommand);
 		this.unlockUndoButton.addActionListener(overviewController);
 		this.add(unlockUndoButton);
-		this.undoRoundButton = new JButton("Reset Year");
+		this.undoRoundButton = new JButton("Reset year");
 		ComponentUtil.setComponentBounds(undoRoundButton, undobuttonsize, undobuttonpos);
 		this.undoRoundButton.setEnabled(false);
 		this.undoRoundButton.setActionCommand(OverviewController.resetRoundActionCommand);
 		this.undoRoundButton.addActionListener(overviewController);
 		this.add(undoRoundButton);
-		this.previousResultsButton = new JButton("Previous offer results");
-		ComponentUtil.setComponentBounds(previousResultsButton, previousbuttonsize, previousbuttonpos);
-		//this.add(previousResultsButton);
 		
 		//Insert districtpanels
 		this.districtPanels = new DistrictPanel[districts.length];

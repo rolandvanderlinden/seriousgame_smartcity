@@ -50,9 +50,9 @@ public class EndOfRoundController implements ActionListener
 				//Switch the option to reset the round.
 				boolean advanceEnabled = screen.getAdvanceButton().isEnabled();
 				if(advanceEnabled)
-					screen.getUnlockAdvanceButton().setText("Unlock Advance");
+					screen.getUnlockAdvanceButton().setText("Unlock advance");
 				else
-					screen.getUnlockAdvanceButton().setText("Lock Advance");
+					screen.getUnlockAdvanceButton().setText("Lock advance");
 				screen.getAdvanceButton().setEnabled(!advanceEnabled);
 			}
 			
@@ -63,8 +63,6 @@ public class EndOfRoundController implements ActionListener
 				//TODO
 				//TODO
 	
-				
-				
 				//Make sure that the applet starts up the end-of-round screen.
 				screenDisplayController.removeCurrentScreen();
 				screenDisplayController.insertOverviewScreen();
