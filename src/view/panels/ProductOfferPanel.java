@@ -91,9 +91,9 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		VectorF2 firstcipanelpos = LocationCalculator.calculateLocation(cipanelsize, holdersize, 0.35f, 0.64f);
 		VectorF2 offerbuttonpos = LocationCalculator.calculateLocation(offerbuttonsize, holdersize, 0.6f, 0.9f);
 		VectorF2 cancelbuttonpos = LocationCalculator.calculateLocation(cancelbuttonsize, holdersize, 0.8f, 0.9f);
-		VectorF2 numberlabelpos = LocationCalculator.calculateLocation(numberlabelsize, holdersize, 0.42f, 0.82f);
-		VectorF2 lessbuttonpos = LocationCalculator.calculateLocation(morelessbuttonsize, holdersize, 0.36f, 0.82f);
-		VectorF2 morebuttonpos = LocationCalculator.calculateLocation(morelessbuttonsize, holdersize, 0.44f, 0.82f);
+		VectorF2 numberlabelpos = LocationCalculator.calculateLocation(numberlabelsize, holdersize, 0.412f, 0.815f);
+		VectorF2 lessbuttonpos = LocationCalculator.calculateLocation(morelessbuttonsize, holdersize, 0.36f, 0.81f);
+		VectorF2 morebuttonpos = LocationCalculator.calculateLocation(morelessbuttonsize, holdersize, 0.44f, 0.81f);
 		
 		//Add labels
 		this.titleLabel = new JLabel(titleText);
@@ -155,17 +155,17 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		}
 		
 		//Add quantity components
-		this.numberLabel = new JLabel("test");
+		this.numberLabel = new JLabel();
 		ComponentUtil.setComponentBounds(numberLabel, numberlabelsize, numberlabelpos);
 		this.numberLabel.setForeground(Color.white);
 		this.numberLabel.setFont(Content.mediumFont);
-		this.numberLabel.setToolTipText("You plan to introduce " + numberLabel.getText() + " types of this product.");
 		this.add(numberLabel);
 		this.lessButton = new JButton(ImageLoader.Instance().loadImageIcon(Content.leftArrow));
 		ComponentUtil.setComponentBounds(lessButton, morelessbuttonsize, lessbuttonpos);
 		this.lessButton.addActionListener(productOfferController);
 		this.lessButton.setToolTipText("Decrease the number of products you want to introduce.");
 		this.lessButton.setActionCommand(lessActionCommand);
+		this.lessButton.setEnabled(false);
 		this.add(lessButton);
 		this.moreButton = new JButton(ImageLoader.Instance().loadImageIcon(Content.rightArrow));
 		ComponentUtil.setComponentBounds(moreButton, morelessbuttonsize, morebuttonpos);
@@ -188,10 +188,29 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		this.cancelButton.setToolTipText("The product introduction will be cancelled. You will return to the overview screen.");
 		this.cancelButton.setActionCommand(cancelOfferActionCommand);
 		this.add(cancelButton);
+		
+		this.setQuantity(1);
 	}
-
+	
+	public void setQuantity(int quantity)
+	{
+		this.numberLabel.setText("" + quantity);
+		this.numberLabel.setToolTipText("You plan to introduce " + numberLabel.getText() + " types of this product.");
+	}
+	
 	public JButton getOfferButton()
 	{
 		return this.offerButton;
 	}
+	
+	public JButton getLessButton()
+	{
+		return this.lessButton;
+	}
+	
+	public JButton getMoreButton()
+	{
+		return this.moreButton;
+	}
+
 }

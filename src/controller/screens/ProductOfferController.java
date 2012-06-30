@@ -30,6 +30,7 @@ public class ProductOfferController implements ActionListener, ItemListener
 	
 	protected Technology selectedTechnology;
 	protected ArrayList<TechImprovement> selectedImprovements;
+	protected int quantity;
 	
 	public ProductOfferController(IScreenDisplayController screenDisplayController, District district, ProductOfferScreen productOfferScreen)
 	{
@@ -40,6 +41,7 @@ public class ProductOfferController implements ActionListener, ItemListener
 		this.productOfferScreen = productOfferScreen;
 		
 		this.selectedImprovements = new ArrayList<TechImprovement>();
+		this.quantity = 1;
 	}
 
 	@Override
@@ -78,13 +80,12 @@ public class ProductOfferController implements ActionListener, ItemListener
 			//Offer the product with the currently selected technology and improvements.
 			if(actioncommand.equals(ProductOfferPanel.offerProductActionCommand))
 			{
-				//TODO add the product to the teams' round offers. Remove the product info that has been saved here.
 				Product offeredProduct = ProductManager.getInstance().getProductByContent(selectedTechnology, selectedImprovements.toArray(new TechImprovement[selectedImprovements.size()]));
 				ProductOffer productOffer = new ProductOffer(offeredProduct, district);
 				
 				//The id of the offered technology is equal to the id of the team.
 				Team team = TeamManager.getInstance().getTeamByTechnologyID(productOffer.getProduct().getTechnology().getID());
-				team.addRoundOffer(productOffer);
+				team.addRoundOffer(productOffer, quantity);
 				
 				this.selectedImprovements.clear();
 				this.selectedTechnology = null;
@@ -100,6 +101,26 @@ public class ProductOfferController implements ActionListener, ItemListener
 				screenDisplayController.removeCurrentScreen();
 				screenDisplayController.insertOverviewScreen();
 			}
+			
+			//Less quantity.
+			else if(actioncommand.equals(ProductOfferPanel.lessActionCommand))
+			{
+				quantity = Math.max(quantity - 1, 1);
+				if(quantity == 1) 
+					productOfferScreen.getProductOfferPanel().getLessButton().setEnabled(false);
+				else
+					productOfferScreen.getProductOfferPanel().getLessButton().setEnabled(true);
+				productOfferScreen.getProductOfferPanel().setQuantity(quantity);
+			}
+			
+			//More quantity
+			else if(actioncommand.equals(ProductOfferPanel.moreActionCommand))
+			{
+				quantity++;
+				productOfferScreen.getProductOfferPanel().getLessButton().setEnabled(true);
+				productOfferScreen.getProductOfferPanel().setQuantity(quantity);
+			}
+			
 			else
 				throw new UnsupportedOperationException("actioncommand was incorrect: " + actioncommand);
 		}

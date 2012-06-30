@@ -27,16 +27,16 @@ public class Team
 	/**
 	 * This will add a new offer to the roundoffers list.
 	 */
-	public void addRoundOffer(ProductOffer roundOffer)
+	public void addRoundOffer(ProductOffer roundOffer, int quantity)
 	{
 		if(roundOffers.containsKey(roundOffer))
 		{
 			int oldTimesOffered = roundOffers.get(roundOffer);
-			int newTimesOffered = oldTimesOffered + 1;
+			int newTimesOffered = oldTimesOffered + quantity;
 			roundOffers.put(roundOffer, newTimesOffered);
 		}
 		else
-			roundOffers.put(roundOffer, 1);
+			roundOffers.put(roundOffer, quantity);
 	}
 	
 	/**
