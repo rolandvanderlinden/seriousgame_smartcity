@@ -8,17 +8,15 @@ public class Team
 {
 	protected int ID;
 	protected String name;
-	protected Color teamColor;
 	protected HashMap<ProductOffer, Integer> roundOffers;
 	protected HashMap<ProductOffer, Integer> acceptedOffers;
 	
-	public Team(int ID, String name, Color teamColor)
+	public Team(int ID, String name)
 	{
 		super();
 		
 		this.ID = ID;
 		this.name = name;
-		this.teamColor = teamColor;
 		
 		this.roundOffers = new HashMap<ProductOffer, Integer>();
 		this.acceptedOffers = new HashMap<ProductOffer, Integer>();
@@ -85,11 +83,6 @@ public class Team
 	public String getName()
 	{
 		return this.name;
-	}
-	
-	public Color getTeamColor()
-	{
-		return teamColor;
 	}
 	
 	public HashMap<ProductOffer, Integer> getRoundOffers()

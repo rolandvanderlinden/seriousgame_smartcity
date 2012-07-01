@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import util.HashMapUtil;
+
 import model.data.District;
 import model.data.ProductOffer;
 import model.data.TechImprovement;
 import model.data.Technology;
-import model.util.HashMapUtil;
 import application.Config;
 
 /**
@@ -58,17 +59,13 @@ public class AllowedProductManager
 	
 	private void initializeOrders()
 	{
-		Technology techA = ProductManager.getInstance().getTechnologyByName(Config.teamNames[0]);
-		Technology techB = ProductManager.getInstance().getTechnologyByName(Config.teamNames[1]);
-		Technology techC = ProductManager.getInstance().getTechnologyByName(Config.teamNames[2]);
+		Technology techA = ProductManager.getInstance().getTechnologyByName(Config.technologyNames[0]);
+		Technology techB = ProductManager.getInstance().getTechnologyByName(Config.technologyNames[1]);
+		Technology techC = ProductManager.getInstance().getTechnologyByName(Config.technologyNames[2]);
 		
-		this.d1Order = new Technology[Config.teamNames.length];
-		this.d2Order = new Technology[Config.teamNames.length];
-		this.d3Order = new Technology[Config.teamNames.length];
-		
-		fillOrder(d1Order, techB, techC, techA);
-		fillOrder(d2Order, techA, techC, techB);
-		fillOrder(d3Order, techC, techA, techB);
+		this.d1Order = fillArray(techB, techC, techA);
+		this.d2Order = fillArray(techA, techC, techB);
+		this.d3Order = fillArray(techC, techA, techB);
 	}
 	
 	/**
@@ -86,11 +83,11 @@ public class AllowedProductManager
 	 */
 	private void fillMap(HashMap<ProductOffer, Integer> map, District district, int pa1, int pa2, int pa3, int pb1, int pb2, int pb3, int pc1, int pc2, int pc3)
 	{
-		Technology techA = ProductManager.getInstance().getTechnologyByName(Config.teamNames[0]);
-		Technology techB = ProductManager.getInstance().getTechnologyByName(Config.teamNames[1]);
-		Technology techC = ProductManager.getInstance().getTechnologyByName(Config.teamNames[2]);
+		Technology techA = ProductManager.getInstance().getTechnologyByName(Config.technologyNames[0]);
+		Technology techB = ProductManager.getInstance().getTechnologyByName(Config.technologyNames[1]);
+		Technology techC = ProductManager.getInstance().getTechnologyByName(Config.technologyNames[2]);
 		TechImprovement improvA = ProductManager.getInstance().getImprovementByName(Config.improvementNames[0]);
-		TechImprovement improvB = ProductManager.getInstance().getImprovementByName(Config.improvementNames[0]);
+		TechImprovement improvB = ProductManager.getInstance().getImprovementByName(Config.improvementNames[1]);
 		
 		map.put(new ProductOffer(ProductManager.getInstance().getProductByContent(techA), district), pa1);
 		map.put(new ProductOffer(ProductManager.getInstance().getProductByContent(techA, improvA), district), pa2);
@@ -103,10 +100,112 @@ public class AllowedProductManager
 		map.put(new ProductOffer(ProductManager.getInstance().getProductByContent(techC, improvB), district), pc3);
 	}
 	
-	private void fillOrder(Technology[] order, Technology... techs)
+	private Technology[] fillArray(Technology... techs)
 	{
-		order = techs;
+		return techs;
 	}
+	
+	/**
+	 * This function calculates which productoffers are accepted and rejected, and returns both maps in a list.
+	 * @param district
+	 * @return
+	 */
+	public ArrayList<HashMap<ProductOffer, Integer>> calculateAcceptedAndRejectedRoundOffersForDistrict(int district)
+	{
+		HashMap<ProductOffer, Integer> accepted = new HashMap<ProductOffer, Integer>();
+		HashMap<ProductOffer, Integer> rejected = new HashMap<ProductOffer, Integer>();
+		
+		//Get all the offers for the round of the given district.
+		HashMap<ProductOffer, Integer> roundOffersMap = TeamManager.getInstance().getRoundOfferMapForDistrict(district);
+		//Get all the offers that are still allowed based on accepted and order.
+		HashMap<ProductOffer, Integer> allowedOffersMap = AllowedProductManager.getInstance().getAllowedProductOffersOfDistrict(district);
+		//Order the offered round products on least amount of improvements.
+		ArrayList<Entry<ProductOffer, Integer>> orderedRoundOfferEntries = HashMapUtil.sortEntriesOnAmountOfImprovements(HashMapUtil.deepClone(roundOffersMap));
+		
+		//For each entry, first try to fill the products with the least improvements, and then try to fill it in. 
+		//Add the number of rejected and accepted to the correct map.
+		for(Entry<ProductOffer, Integer> entry : orderedRoundOfferEntries)
+		{
+			ProductOffer roundOffer = entry.getKey();
+			int offeredAmount = entry.getValue();
+			
+			//No improvements
+			if(roundOffer.getProduct().getImprovements().length == 0)
+			{
+				//We only need to look at the technology product how much is allowed.
+				int rejectedAmount = subtractAndCalculateRest(allowedOffersMap, roundOffer, offeredAmount);
+				int acceptedAmount = offeredAmount - rejectedAmount;
+				if(rejectedAmount > 0)
+					HashMapUtil.addToHashMap(rejected, roundOffer, rejectedAmount);
+				if(acceptedAmount > 0)
+					HashMapUtil.addToHashMap(accepted, roundOffer, acceptedAmount);
+			}
+			
+			//One improvement
+			else if(roundOffer.getProduct().getImprovements().length == 1)
+			{
+				//We should first try out whether it can be subtracted from the technology product, and then the rest from the improvement product.
+				ProductOffer techOffer = new ProductOffer(ProductManager.getInstance().getProductByContent(roundOffer.getProduct().getTechnology()), roundOffer.getDistrict());
+				int rejectedAmount1 = subtractAndCalculateRest(allowedOffersMap, techOffer, offeredAmount);
+				int totalRejectedAmount = rejectedAmount1;
+				int totalAcceptedAmount = offeredAmount - totalRejectedAmount;
+				
+				//Also do it for the offer with the improvement, since we are not done yet.
+				if(rejectedAmount1 > 0)
+				{
+					int rejectedAmount2 = subtractAndCalculateRest(allowedOffersMap, roundOffer, rejectedAmount1);
+					totalRejectedAmount = rejectedAmount2;
+					totalAcceptedAmount = offeredAmount - totalRejectedAmount;
+				}
+				if(totalRejectedAmount > 0)
+					HashMapUtil.addToHashMap(rejected, roundOffer, totalRejectedAmount);
+				if(totalAcceptedAmount > 0)
+					HashMapUtil.addToHashMap(accepted, roundOffer, totalAcceptedAmount);
+			}
+			
+			//Two improvements.
+			else if(roundOffer.getProduct().getImprovements().length == 2)
+			{
+				//We should first try to subtract it from the technology product, and then the rest from the improvement product.
+				ProductOffer techOffer = new ProductOffer(ProductManager.getInstance().getProductByContent(roundOffer.getProduct().getTechnology()), roundOffer.getDistrict());
+				int rejectedAmount1 = subtractAndCalculateRest(allowedOffersMap, techOffer, offeredAmount);
+				int totalRejectedAmount = rejectedAmount1;
+				int totalAcceptedAmount = offeredAmount - totalRejectedAmount;
+				
+				//Also do it for the offer with the first improvement.
+				if(rejectedAmount1 > 0)
+				{
+					ProductOffer improv1Offer = new ProductOffer(ProductManager.getInstance().getProductByContent(roundOffer.getProduct().getTechnology(), roundOffer.getProduct().getImprovements()[0]), roundOffer.getDistrict());
+					int rejectedAmount2 = subtractAndCalculateRest(allowedOffersMap, improv1Offer, rejectedAmount1);
+					totalRejectedAmount = rejectedAmount2;
+					totalAcceptedAmount = offeredAmount - totalRejectedAmount;
+					
+					//Now try it with the second improvement.
+					if(rejectedAmount2 > 0)
+					{
+						ProductOffer improv2Offer = new ProductOffer(ProductManager.getInstance().getProductByContent(roundOffer.getProduct().getTechnology(), roundOffer.getProduct().getImprovements()[1]), roundOffer.getDistrict());
+						int rejectedAmount3 = subtractAndCalculateRest(allowedOffersMap, improv2Offer, rejectedAmount2);
+						totalRejectedAmount = rejectedAmount3;
+						totalAcceptedAmount = offeredAmount - totalRejectedAmount;
+					}
+				}
+				if(totalRejectedAmount > 0)
+					HashMapUtil.addToHashMap(rejected, roundOffer, totalRejectedAmount);
+				if(totalAcceptedAmount > 0)
+					HashMapUtil.addToHashMap(accepted, roundOffer, totalAcceptedAmount);
+			}
+			
+			else 
+				throw new UnsupportedOperationException();
+		}
+
+		//Insert the accepted and rejected maps to the list.
+		ArrayList<HashMap<ProductOffer, Integer>> result = new ArrayList<HashMap<ProductOffer, Integer>>(2);
+		result.add(accepted);
+		result.add(rejected);
+		return result;
+	}
+	
 	
 	/**
 	 * This method calculates a map of the number of productoffers that are still allowed, based on:

@@ -1,4 +1,4 @@
-package model.util;
+package util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,5 +53,16 @@ public class HashMapUtil
 		}
 		
 		return result;
+	}
+	
+	public static void addToHashMap(HashMap<ProductOffer, Integer> map, ProductOffer offer, int amount)
+	{
+		if(map.containsKey(offer))
+		{
+			int oldAmount = map.get(offer);
+			map.put(offer,  amount + oldAmount);
+		}
+		else
+			map.put(offer, amount);
 	}
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import util.HashMapUtil;
+
 import model.data.AcceptanceData;
 import model.data.District;
 import model.data.ProductOffer;
@@ -26,7 +28,7 @@ public class TeamManager
 		//Initiate all teams
 		teams = new Team[Config.teamNames.length];
 		for(int i = 0; i < Config.teamNames.length; i++)
-			teams[i] = new Team(i, Config.teamNames[i], Color.pink);
+			teams[i] = new Team(i, Config.teamNames[i]);
 	}
 	
 	public static TeamManager getInstance()
@@ -85,19 +87,14 @@ public class TeamManager
 	{
 		ArrayList<AcceptanceData> result = new ArrayList<AcceptanceData>();
 		
-		HashMap<ProductOffer, Integer> districtRoundOffers = getRoundOfferMapForDistrict(district);
-		for(Entry<ProductOffer, Integer> entry : districtRoundOffers.entrySet())
-		{
-			int numberOffered = entry.getValue();
-			int numberAllowed = allowedProductOfferCount(entry.getKey());
-			int numberAccepted = Math.min(numberOffered, numberAllowed);
-			int numberRejected = Math.max(0, numberOffered - numberAllowed);
-			
-			if(numberAccepted > 0)
-				result.add(new AcceptanceData(entry.getKey(), numberAccepted, true));
-			if(numberRejected > 0)
-				result.add(new AcceptanceData(entry.getKey(), numberRejected, false));
-		}
+		ArrayList<HashMap<ProductOffer, Integer>> acceptedRejectedList = AllowedProductManager.getInstance().calculateAcceptedAndRejectedRoundOffersForDistrict(district);
+		HashMap<ProductOffer, Integer> accepted = acceptedRejectedList.get(0);
+		HashMap<ProductOffer, Integer> rejected = acceptedRejectedList.get(1);
+		
+		for(Entry<ProductOffer, Integer> entry : accepted.entrySet())
+			result.add(new AcceptanceData(entry.getKey(), entry.getValue(), true));
+		for(Entry<ProductOffer, Integer> entry : rejected.entrySet())
+			result.add(new AcceptanceData(entry.getKey(), entry.getValue(), false));
 		
 		return result;
 	}
@@ -111,19 +108,17 @@ public class TeamManager
 	{
 		ArrayList<AcceptanceData> result = new ArrayList<AcceptanceData>();
 		
-		HashMap<ProductOffer, Integer> teamRoundOffers = getTeamByID(team).getRoundOffers();
-		for(Entry<ProductOffer, Integer> entry : teamRoundOffers.entrySet())
+		//Put all the acceptancedata from the districts of the given team in the result.
+		District[] districts = DistrictManager.getInstance().getDistricts();
+		for(int i = 0; i < districts.length; i++)
 		{
-			ProductOffer po = entry.getKey();
-			int numberOffered = entry.getValue();
-			int numberAllowed = allowedProductOfferCount(po);
-			int numberAccepted = Math.min(numberOffered, numberAllowed);
-			int numberRejected = Math.max(0, numberOffered - numberAllowed);
-			
-			if(numberAccepted > 0)
-				result.add(new AcceptanceData(po, numberAccepted, true));
-			if(numberRejected > 0)
-				result.add(new AcceptanceData(po, numberRejected, false));
+			ArrayList<AcceptanceData> districtData = getRoundAcceptanceDataForDistrict(districts[i].getID());
+			for(AcceptanceData ad : districtData)
+			{
+				Team adTeam = TeamManager.getInstance().getTeamByTechnologyID(ad.productOffer.getProduct().getTechnology().getID());
+				if(adTeam.getID() == team)
+					result.add(ad);
+			}
 		}
 		
 		return result;
@@ -146,6 +141,7 @@ public class TeamManager
 		return result;
 	}
 	
+
 	/**
 	 * This returns the map with round offers for the given district.
 	 * @param district
@@ -200,27 +196,5 @@ public class TeamManager
 		}
 		
 		return result;
-	}
-	
-	/**
-	 * This tells us how much of the given product are allowed in the district of the productoffer.
-	 * @param productOffer
-	 * @return
-	 */
-	public int allowedProductOfferCount(ProductOffer productOffer)
-	{
-		District[] districts = DistrictManager.getInstance().getDistricts();
-		
-		ArrayList<HashMap<ProductOffer, Integer>> districtMaps = new ArrayList<HashMap<ProductOffer, Integer>>(districts.length);
-		for(District district : districts)
-		{
-			HashMap<ProductOffer, Integer> districtMap = getAcceptedOfferMapForDistrict(district.getID());
-			districtMaps.add(districtMap);			
-		}
-		
-		//TODO !!!!!!!
-		//TODO make sure it is actually allowed to accept this offer. Note that we need to return a number!.
-		 
-		return 5;
 	}
 }
