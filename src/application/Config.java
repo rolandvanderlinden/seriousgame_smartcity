@@ -21,4 +21,6 @@ public class Config
 	public final static String dependendDistrictName = districtNames[0]; //TODO pick the correct districtname
 	public final static String[] technologyNames = { "QuadCore Technology", "HexaTech Technology", "CircaCorp Technology" }; 
 	public final static String[] improvementNames = { "Userfriendlyness", "Moneysaver" };
+	
+	
 }

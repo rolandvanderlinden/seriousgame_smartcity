@@ -19,6 +19,11 @@ public class District
 		return this.ID;
 	}
 	
+	public District clone()
+	{
+		return new District(ID, new String(name));
+	}
+	
 	public int getID()
 	{
 		return ID;

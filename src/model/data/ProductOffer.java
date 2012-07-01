@@ -33,6 +33,11 @@ public class ProductOffer
 		return other.hashCode() == hashCode();
 	}
 	
+	public ProductOffer clone()
+	{
+		return new ProductOffer(product.clone(), district.clone());
+	}
+	
 	public Product getProduct()
 	{
 		return product;

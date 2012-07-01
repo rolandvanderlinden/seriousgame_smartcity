@@ -61,6 +61,15 @@ public class Product
 		return result;
 	}
 	
+	public Product clone()
+	{
+		TechImprovement[] arrayclone = new TechImprovement[improvements.length];
+		for(int i = 0; i < improvements.length; i++)
+			arrayclone[i] = improvements[i].clone();
+		
+		return new Product(ID, technology.clone(), arrayclone);
+	}
+	
 	public int getID()
 	{
 		return this.ID;

@@ -27,6 +27,11 @@ public class Technology
 		return other.getID() == ID;
 	}
 	
+	public Technology clone()
+	{
+		return new Technology(ID, new String(name));
+	}
+	
 	public int getID()
 	{
 		return ID;

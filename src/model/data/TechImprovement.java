@@ -27,6 +27,11 @@ public class TechImprovement
 		return other.getID() == ID;
 	}
 	
+	public TechImprovement clone()
+	{
+		return new TechImprovement(ID, new String(name));
+	}
+	
 	public int getID()
 	{
 		return this.ID;
