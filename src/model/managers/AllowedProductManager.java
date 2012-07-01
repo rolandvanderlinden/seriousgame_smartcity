@@ -108,6 +108,16 @@ public class AllowedProductManager
 		order = techs;
 	}
 	
+	/**
+	 * This method calculates a map of the number of productoffers that are still allowed, based on:
+	 * - The initial amounts of allowed offers.
+	 * - The accepted amounts of allowed offers.
+	 * - The order in which offers should occur.
+	 * - The fact that products with improvements can be a stand in for products without improvements.
+	 * 
+	 * @param district
+	 * @return
+	 */
 	public HashMap<ProductOffer, Integer> getAllowedProductOffersOfDistrict(int district)
 	{
 		HashMap<ProductOffer, Integer> initiallyAllowed = getAllowedMap(district);
@@ -117,7 +127,7 @@ public class AllowedProductManager
 		HashMap<ProductOffer, Integer> allowedAfterSubtraction = subtractAcceptedOffers(initiallyAllowed, alreadyAccepted);
 
 		//Remove things that are not allowed yet due to the order.
-		HashMap<ProductOffer, Integer> allowedAfterOrder = removeOrderOffers(district, allowedAfterSubtraction);
+		HashMap<ProductOffer, Integer> allowedAfterOrder = reduceOrderOffers(district, allowedAfterSubtraction);
 		
 		return allowedAfterOrder;
 	}
@@ -201,12 +211,39 @@ public class AllowedProductManager
 	 * @param allowedMap
 	 * @return
 	 */
-	private HashMap<ProductOffer, Integer> removeOrderOffers(int district, HashMap<ProductOffer, Integer> allowedMap)
+	private HashMap<ProductOffer, Integer> reduceOrderOffers(int district, HashMap<ProductOffer, Integer> allowedMap)
 	{
-		Technology[] order = this.getTechnologyOrderByIndex(district);
+		Technology[] orderOfTechnologies = this.getTechnologyOrderByIndex(district);
 		
-		//TODO
-		throw new UnsupportedOperationException();
+		//Add the type of technologies to the list that are allowed to be offered.
+		ArrayList<Technology> allowedTechnologies = new ArrayList<Technology>(orderOfTechnologies.length);
+		for(int i = 0; i < orderOfTechnologies.length; i++)
+		{
+			if(i == 0)
+				allowedTechnologies.add(orderOfTechnologies[i]);
+			
+			ProductOffer techOffer = new ProductOffer(ProductManager.getInstance().getProductByContent(orderOfTechnologies[i]), DistrictManager.getInstance().getDistrictByID(district));
+			int allowedOffers = allowedMap.get(techOffer);
+			if(allowedOffers == 0)
+				allowedTechnologies.add(orderOfTechnologies[i]);
+			else
+				break;
+		}
+		
+		//Reduce the offers that are not yet allowed to zero.
+		HashMap<ProductOffer, Integer> result = new HashMap<ProductOffer, Integer>();
+		for(Entry<ProductOffer, Integer> entry : allowedMap.entrySet())
+		{
+			ProductOffer po = entry.getKey();
+			int allowedAmount = entry.getValue();
+			
+			if(allowedTechnologies.contains(po.getProduct().getTechnology()))
+				result.put(po, allowedAmount);
+			else
+				result.put(po, 0);		
+		}
+		
+		return result;
 	}
 	
 	/**
