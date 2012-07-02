@@ -18,7 +18,6 @@ public class Config
 	//Startup data
 	public final static String[] teamNames = { "QuadCore Inc", "HexaTech", "CircaCorp" };
 	public final static String[] districtNames = { "Estermondt", "Grote Beek", "De Hoven" };
-	public final static String dependendDistrictName = districtNames[0]; //TODO pick the correct districtname
 	public final static String[] technologyNames = { "QuadCore Technology", "HexaTech Technology", "CircaCorp Technology" }; 
 	public final static String[] improvementNames = { "Userfriendlyness", "Moneysaver" };
 	

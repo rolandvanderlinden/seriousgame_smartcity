@@ -137,21 +137,21 @@ public class ProductManager
 		String name = product.getTechnology().getName();
 		for(TechImprovement ti : product.getImprovements())
 			name += "-" + ti.getName();
-		name += ".jpg";
+		name += ".png";
 		
 		return new ResourceInfo(name, ProductRef.class);
 	}
 	
 	public static ResourceInfo getTechnologyResourceInfo(Technology technology)
 	{
-		String imageName = technology.getName() + ".jpg";
+		String imageName = technology.getName() + ".png";
 		
 		return new ResourceInfo(imageName, TechnologyRef.class);
 	}
 	
 	public static ResourceInfo getTechImprovementResourceInfo(TechImprovement ti)
 	{
-		String imageName = ti.getName() + ".jpg";
+		String imageName = ti.getName() + ".png";
 		
 		return new ResourceInfo(imageName, TechImprovementRef.class);
 	}
