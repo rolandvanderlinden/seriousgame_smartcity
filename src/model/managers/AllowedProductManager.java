@@ -224,11 +224,9 @@ public class AllowedProductManager
 		
 		//Subtract the alreadyAccepted from the initiallyAllowed.
 		HashMap<ProductOffer, Integer> allowedAfterSubtraction = subtractAcceptedOffers(initiallyAllowed, alreadyAccepted);
-		Output.show("Allowed After Taken Accepted Offers Into Account:\n" + HashMapUtil.toString(allowedAfterSubtraction));
 		
 		//Remove things that are not allowed yet due to the order.
 		HashMap<ProductOffer, Integer> allowedAfterOrder = reduceOrderOffers(district, allowedAfterSubtraction);
-		Output.show("Allowed After Taken The Order Into Account:\n" + HashMapUtil.toString(allowedAfterOrder));
 		
 		return allowedAfterOrder;
 	}

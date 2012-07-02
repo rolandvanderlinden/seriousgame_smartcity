@@ -63,6 +63,27 @@ public class HZApplet extends JApplet implements IScreenDisplayController
 		this.add(backgroundPanel);
 	}
 	
+	
+	// **********************************************
+	// Start & Stop
+	// **********************************************
+	
+	/**
+	 * This method is called when the applet is started.
+	 */
+	public void start()
+	{
+		Output.show();
+	}
+	
+	/**
+	 * This method is called when the application is stopped.
+	 */
+	public void stop()
+	{
+		Output.show();
+	}
+	
 	// **********************************************
 	// Insert & Remove screens
 	// **********************************************
@@ -107,24 +128,13 @@ public class HZApplet extends JApplet implements IScreenDisplayController
 		insertAScreen(this.mainScreen = new EndOfRoundScreen(backgroundPanel.getSize(), this, currentRoundNumber));
 	}
 	
-	
 	// **********************************************
-	// Start & Stop
+	// Other controls
 	// **********************************************
 	
-	/**
-	 * This method is called when the applet is started.
-	 */
-	public void start()
+	@Override
+	public void increaseRoundNumber()
 	{
-		Output.show();
-	}
-	
-	/**
-	 * This method is called when the application is stopped.
-	 */
-	public void stop()
-	{
-		Output.show();
+		this.currentRoundNumber++;
 	}
 }

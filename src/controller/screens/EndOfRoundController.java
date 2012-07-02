@@ -62,8 +62,6 @@ public class EndOfRoundController implements ActionListener
 			//Test for advance
 			else if(actioncommand.equals(advanceActionCommand))
 			{
-				Output.show();
-				
 				//First calculate everything that is allowed.
 				ArrayList<ArrayList<AcceptanceData>> acceptanceDataPerTeam = new ArrayList<ArrayList<AcceptanceData>>();
 				for(int i = 0; i < Config.teamNames.length; i++)
@@ -83,6 +81,7 @@ public class EndOfRoundController implements ActionListener
 				}
 				
 				//Make sure that the applet starts up the end-of-round screen.
+				screenDisplayController.increaseRoundNumber();
 				screenDisplayController.removeCurrentScreen();
 				screenDisplayController.insertOverviewScreen();
 			}
