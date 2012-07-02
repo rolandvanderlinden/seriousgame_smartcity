@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import model.data.District;
+import model.managers.DistrictManager;
 import model.util.VectorF2;
 import util.ComponentUtil;
 import util.LocationCalculator;
@@ -114,6 +115,7 @@ public class OverviewScreen extends AScreen
 		this.happinessPanel = new HappinessPanel(new Dimension((int)hpanelsize.x, (int)hpanelsize.y));
 		ComponentUtil.setComponentBounds(happinessPanel, hpanelsize, hpanelpos);
 		happinessPanel.setToolTipText("The level of happiness of the city.");
+		happinessPanel.setHappiness(DistrictManager.getInstance().getCityHappinessPercentage());
 		this.add(happinessPanel);
 		
 		//Start up some components

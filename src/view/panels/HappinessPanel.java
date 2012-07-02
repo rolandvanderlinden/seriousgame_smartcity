@@ -31,10 +31,6 @@ public class HappinessPanel extends JPanel
 		this.add(overlayImage);
 		this.percentageImage = new TranslucentBufferedImageJPanel(Content.happinessBar, 0.9f);
 		this.add(percentageImage);
-		
-		//Set size of the bar.
-		//TODO remove
-		setHappiness(0.52f);
 	}
 	
 	/**

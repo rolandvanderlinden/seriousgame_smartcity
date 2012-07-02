@@ -1,5 +1,8 @@
 package model.managers;
 
+import java.util.ArrayList;
+
+import model.data.AcceptanceData;
 import model.data.District;
 import model.util.ResourceInfo;
 import application.Config;
@@ -13,17 +16,21 @@ import content.district.DistrictRef;
 public class DistrictManager
 {
 	public final static String districtOfferActionCommand = "District offer for ID: ";
-	
-	
+
 	private static DistrictManager instance;
 	protected District[] districts;
+	protected int[] districtHappiness;
 	
 	private DistrictManager()
 	{
 		//Initiate all districts.
 		districts = new District[Config.districtNames.length];
+		districtHappiness = new int[Config.districtNames.length];
 		for(int i = 0; i < Config.districtNames.length; i++)
+		{
 			districts[i] = new District(i, Config.districtNames[i]);
+			districtHappiness[i] = Config.initialDistrictHappiness;
+		}
 	}
 	
 	public static DistrictManager getInstance()
@@ -34,6 +41,53 @@ public class DistrictManager
 		return instance;
 	}
 	
+	public int[] calculateHappinessChangeOfDistricts()
+	{
+		int[] result = new int[districts.length];
+		
+		for(int i = 0; i < districts.length; i++)
+		{
+			int acceptedNormal = 0;
+			int acceptedSpecial = 0;
+			int rejected = 0;
+			
+			ArrayList<AcceptanceData> districtAcceptanceData = TeamManager.getInstance().getRoundAcceptanceDataForDistrict(i);
+			for(AcceptanceData ad : districtAcceptanceData)
+			{
+				if(ad.accepted)
+				{
+					if(ad.productOffer.getProduct().getImprovements().length == 0)
+						acceptedNormal += ad.count;
+					else
+						acceptedSpecial += ad.count;
+				}
+				else
+					rejected += ad.count;
+			}
+			
+			int happinessLoss = rejected * Config.happinessLossRejected;
+			if((acceptedNormal + acceptedSpecial + rejected) == 0)
+				happinessLoss += Config.happinessLossNeglected;
+			int happinessGain = (acceptedNormal * Config.happinessGainAcceptedNormal) + (acceptedSpecial * Config.happinessGainAcceptedSpecial);
+			
+			result[i] = happinessGain - happinessLoss;
+		}
+		
+		return result;
+	}
+	
+	public void processHappinessChangeOfDistricts()
+	{
+		int[] happinessChanges = calculateHappinessChangeOfDistricts();
+		for(int i = 0; i < happinessChanges.length; i++)
+			changeDistrictHappinessPointsByID(i,  happinessChanges[i]);
+	}
+	
+	public void changeDistrictHappinessPointsByID(int ID, int happinessChange)
+	{
+		districtHappiness[ID] = Math.max(0, Math.min(100, districtHappiness[ID] + happinessChange));
+	}
+	
 	public District getDistrictByID(int ID)
 	{
 		for(District d : districts)
@@ -41,6 +95,26 @@ public class DistrictManager
 				return d;
 		
 		return null;
+	}
+	
+	public double getDistrictHappinessPercentageByID(int ID)
+	{
+		return districtHappiness[ID] / 100.0;
+	}
+	
+	public double getCityHappinessPercentage()
+	{
+		double percentage = 0;
+		
+		for(int i = 0; i < districtHappiness.length; i++)
+		{
+			if(i == Config.centrumDistrictIndex)
+				percentage += 0.4 * districtHappiness[i];
+			else
+				percentage += 0.3 * districtHappiness[i];
+		}
+		
+		return percentage / 100.0;
 	}
 
 	public District getDistrictByName(String name)

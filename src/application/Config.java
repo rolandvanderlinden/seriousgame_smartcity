@@ -14,10 +14,17 @@ public class Config
 	public final static int outerBorderSize = 2;
 	
 	public final static int fundsGainPerAcceptedProduct = 2;
+	public final static int initialDistrictHappiness = 30;
+	public final static int happinessGainAcceptedNormal = 4;
+	public final static int happinessGainAcceptedSpecial = 5;
+	public final static int happinessLossNeglected = 5;
+	public final static int happinessLossRejected = 1;
+	
 	
 	//Startup data
 	public final static String[] teamNames = { "QuadCore Inc", "HexaTech", "CircaCorp" };
 	public final static String[] districtNames = { "Estermondt", "Grote Beek", "De Hoven" };
+	public final static int centrumDistrictIndex = 0;
 	public final static String[] technologyNames = { "QuadCore Technology", "HexaTech Technology", "CircaCorp Technology" }; 
 	public final static String[] improvementNames = { "Userfriendlyness", "Moneysaver" };
 	

@@ -112,6 +112,7 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		this.happinessPanel = new HappinessPanel(new Dimension((int)hpanelsize.x, (int)hpanelsize.y));
 		ComponentUtil.setComponentBounds(happinessPanel, hpanelsize, hpanelpos);
 		happinessPanel.setToolTipText("The level of happiness of district " + district.getName() + ".");
+		happinessPanel.setHappiness(DistrictManager.getInstance().getDistrictHappinessPercentageByID(district.getID()));
 		this.add(happinessPanel);
 		
 		//Insert productoffer panels
