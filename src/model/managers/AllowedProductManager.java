@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import util.HashMapUtil;
-
 import model.data.District;
 import model.data.ProductOffer;
 import model.data.TechImprovement;
 import model.data.Technology;
+import util.HashMapUtil;
+import util.Output;
 import application.Config;
 
 /**
@@ -224,9 +224,11 @@ public class AllowedProductManager
 		
 		//Subtract the alreadyAccepted from the initiallyAllowed.
 		HashMap<ProductOffer, Integer> allowedAfterSubtraction = subtractAcceptedOffers(initiallyAllowed, alreadyAccepted);
-
+		Output.show("Allowed After Taken Accepted Offers Into Account:\n" + HashMapUtil.toString(allowedAfterSubtraction));
+		
 		//Remove things that are not allowed yet due to the order.
 		HashMap<ProductOffer, Integer> allowedAfterOrder = reduceOrderOffers(district, allowedAfterSubtraction);
+		Output.show("Allowed After Taken The Order Into Account:\n" + HashMapUtil.toString(allowedAfterOrder));
 		
 		return allowedAfterOrder;
 	}
@@ -318,15 +320,19 @@ public class AllowedProductManager
 		ArrayList<Technology> allowedTechnologies = new ArrayList<Technology>(orderOfTechnologies.length);
 		for(int i = 0; i < orderOfTechnologies.length; i++)
 		{
+			//The first one is always allowed.
 			if(i == 0)
 				allowedTechnologies.add(orderOfTechnologies[i]);
-			
-			ProductOffer techOffer = new ProductOffer(ProductManager.getInstance().getProductByContent(orderOfTechnologies[i]), DistrictManager.getInstance().getDistrictByID(district));
-			int allowedOffers = allowedMap.get(techOffer);
-			if(allowedOffers == 0)
-				allowedTechnologies.add(orderOfTechnologies[i]);
 			else
-				break;
+			{
+				//If the previous tech version was fully filled, this one is also allowed.
+				ProductOffer previousTechOffer = new ProductOffer(ProductManager.getInstance().getProductByContent(orderOfTechnologies[i - 1]), DistrictManager.getInstance().getDistrictByID(district));
+				int allowedOffers = allowedMap.get(previousTechOffer);
+				if(allowedOffers == 0)
+					allowedTechnologies.add(orderOfTechnologies[i]);
+				else
+					break;
+			}
 		}
 		
 		//Reduce the offers that are not yet allowed to zero.

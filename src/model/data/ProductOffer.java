@@ -33,6 +33,11 @@ public class ProductOffer
 		return other.hashCode() == hashCode();
 	}
 	
+	public String toString()
+	{
+		return "d" + district.getID() + ", " + product.toString();
+	}
+	
 	public ProductOffer clone()
 	{
 		return new ProductOffer(product.clone(), district.clone());

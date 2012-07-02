@@ -65,4 +65,29 @@ public class HashMapUtil
 		else
 			map.put(offer, amount);
 	}
+	
+	public static String toString(HashMap<ProductOffer, Integer> map)
+	{
+		//Find the longest String.
+		int longestStringLength = 0;
+		for(Entry<ProductOffer, Integer> entry : map.entrySet())
+		{
+			String poString = entry.getKey().toString();
+			if(poString.length() > longestStringLength)
+				longestStringLength = poString.length();
+		}
+		
+		String result = "";
+		for(Entry<ProductOffer, Integer> entry : map.entrySet())
+		{
+			String poString = entry.getKey().toString();
+			int additionalSpaces = longestStringLength - poString.length();
+			for(int i = 0; i < additionalSpaces; i++)
+				poString = poString + " ";
+			
+			result += poString + " | " + entry.getValue().toString() + "\n";
+		}
+		
+		return result;
+	}
 }

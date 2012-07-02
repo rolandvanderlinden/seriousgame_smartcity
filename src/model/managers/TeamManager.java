@@ -1,16 +1,15 @@
 package model.managers;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
-
-import util.HashMapUtil;
 
 import model.data.AcceptanceData;
 import model.data.District;
 import model.data.ProductOffer;
 import model.data.Team;
+import util.HashMapUtil;
+import util.Output;
 import application.Config;
 
 /**
@@ -94,6 +93,8 @@ public class TeamManager
 	 */
 	public ArrayList<AcceptanceData> getRoundAcceptanceDataForDistrict(int district)
 	{
+		Output.show(" District: " + district);
+		
 		ArrayList<AcceptanceData> result = new ArrayList<AcceptanceData>();
 		
 		ArrayList<HashMap<ProductOffer, Integer>> acceptedRejectedList = AllowedProductManager.getInstance().calculateAcceptedAndRejectedRoundOffersForDistrict(district);
@@ -115,6 +116,8 @@ public class TeamManager
 	 */
 	public ArrayList<AcceptanceData> getRoundAcceptanceDataForTeam(int team)
 	{
+		Output.show(" Team: " + team);
+		
 		ArrayList<AcceptanceData> result = new ArrayList<AcceptanceData>();
 		
 		//Put all the acceptancedata from the districts of the given team in the result.
