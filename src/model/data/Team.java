@@ -38,28 +38,6 @@ public class Team
 	}
 	
 	/**
-	 * This will add all the roundoffers to the acceptedOffers.
-	 */
-	public void addRoundOffersToAcceptedOffers()
-	{
-		for(Entry<ProductOffer, Integer> entry : roundOffers.entrySet())
-		{
-			ProductOffer productOffer = entry.getKey();
-			
-			//Add to the existing number of products
-			if(acceptedOffers.containsKey(productOffer))
-			{
-				int oldTimesAccepted = acceptedOffers.get(productOffer);
-				int newTimesAccepted = oldTimesAccepted + entry.getValue();
-				acceptedOffers.put(productOffer, newTimesAccepted);
-			}
-			//Inser the new number of this product.
-			else
-				acceptedOffers.put(productOffer, entry.getValue());
-		}
-	}
-	
-	/**
 	 * Empty the roundoffers.
 	 */
 	public void clearRoundOffers()

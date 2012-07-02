@@ -2,13 +2,15 @@ package controller.screens;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 
-import model.data.District;
-import model.managers.DistrictManager;
+import model.data.AcceptanceData;
+import model.data.Team;
 import model.managers.TeamManager;
 import view.screens.EndOfRoundScreen;
+import application.Config;
 
 public class EndOfRoundController implements ActionListener
 {
@@ -59,10 +61,24 @@ public class EndOfRoundController implements ActionListener
 			//Test for advance
 			else if(actioncommand.equals(advanceActionCommand))
 			{
-				//TODO make sure everything is properly added and calculated.
-				//TODO
-				//TODO
-	
+				//First calculate everything that is allowed.
+				ArrayList<ArrayList<AcceptanceData>> acceptanceDataPerTeam = new ArrayList<ArrayList<AcceptanceData>>();
+				for(int i = 0; i < Config.teamNames.length; i++)
+				{
+					Team t = TeamManager.getInstance().getTeamByName(Config.teamNames[i]);
+					ArrayList<AcceptanceData> dataOfTeam = TeamManager.getInstance().getRoundAcceptanceDataForTeam(t.getID());
+					acceptanceDataPerTeam.add(dataOfTeam);
+				}
+				
+				//Then add it to the accepted lists of the teams, and clear their round offers.
+				for(int i = 0; i < Config.teamNames.length; i++)
+				{
+					Team t = TeamManager.getInstance().getTeamByName(Config.teamNames[i]);
+					ArrayList<AcceptanceData> dataOfTeam = acceptanceDataPerTeam.get(i);
+					TeamManager.getInstance().addAcceptanceDataToAcceptedOffersOfTeam(t.getID(), dataOfTeam);
+					t.clearRoundOffers();
+				}
+				
 				//Make sure that the applet starts up the end-of-round screen.
 				screenDisplayController.removeCurrentScreen();
 				screenDisplayController.insertOverviewScreen();

@@ -38,6 +38,15 @@ public class TeamManager
 		
 		return instance;
 	}
+
+	public void addAcceptanceDataToAcceptedOffersOfTeam(int teamID, ArrayList<AcceptanceData> data)
+	{
+		Team t = getTeamByID(teamID);
+		
+		for(AcceptanceData ad : data)
+			if(ad.accepted)
+				HashMapUtil.addToHashMap(t.getAcceptedOffers(), ad.productOffer, ad.count);
+	}
 	
 	public Team getTeamByID(int ID)
 	{
