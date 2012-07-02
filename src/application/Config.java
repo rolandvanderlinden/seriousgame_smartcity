@@ -25,7 +25,7 @@ public class Config
 	public final static String[] teamNames = { "CircaCorp", "HexaTech", "QuadCore Inc" };
 	public final static String[] districtNames = { "Estermondt", "Grote Beek", "De Hoven" };
 	public final static int centrumDistrictIndex = 0;
-	public final static String[] technologyNames = { "QuadCore Technology", "HexaTech Technology", "CircaCorp Technology" }; 
+	public final static String[] technologyNames = { "CircaCorp Technology", "HexaTech Technology", "QuadCore Technology" }; 
 	public final static String[] improvementNames = { "Userfriendlyness", "Moneysaver" };
 	
 	
