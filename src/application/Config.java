@@ -19,6 +19,7 @@ public class Config
 	public final static int happinessGainAcceptedSpecial = 5;
 	public final static int happinessLossNeglected = 5;
 	public final static int happinessLossRejected = 1;
+	public final static double centrumHappinessPercentage = 0.25;
 	
 	
 	//Startup data

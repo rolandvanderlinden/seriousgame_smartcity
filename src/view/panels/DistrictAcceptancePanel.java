@@ -43,7 +43,7 @@ public class DistrictAcceptancePanel extends TranslucentBufferedImageJPanel
 		this.setSize(size);
 		FontMetrics mediumFontMetrics = this.getFontMetrics(Content.mediumFont);
 		FontMetrics largeFontMetrics = this.getFontMetrics(Content.largeFont);
-		int happinessChange = DistrictManager.getInstance().calculateHappinessChangeOfDistricts()[district.getID()];
+		double happinessChange = DistrictManager.getInstance().calculateHappinessChangeOfDistricts()[district.getID()];
 		
 		//Text
 		String nameLabelText = "District: " + district.getName();

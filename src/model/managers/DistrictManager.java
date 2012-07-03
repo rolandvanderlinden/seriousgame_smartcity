@@ -19,13 +19,13 @@ public class DistrictManager
 
 	private static DistrictManager instance;
 	protected District[] districts;
-	protected int[] districtHappiness;
+	protected double[] districtHappiness;
 	
 	private DistrictManager()
 	{
 		//Initiate all districts.
 		districts = new District[Config.districtNames.length];
-		districtHappiness = new int[Config.districtNames.length];
+		districtHappiness = new double[Config.districtNames.length];
 		for(int i = 0; i < Config.districtNames.length; i++)
 		{
 			districts[i] = new District(i, Config.districtNames[i]);
@@ -41,9 +41,9 @@ public class DistrictManager
 		return instance;
 	}
 	
-	public int[] calculateHappinessChangeOfDistricts()
+	public double[] calculateHappinessChangeOfDistricts()
 	{
-		int[] result = new int[districts.length];
+		double[] result = new double[districts.length];
 		
 		for(int i = 0; i < districts.length; i++)
 		{
@@ -65,25 +65,25 @@ public class DistrictManager
 					rejected += ad.count;
 			}
 			
-			int happinessLoss = rejected * Config.happinessLossRejected;
+			double happinessLoss = rejected * Config.happinessLossRejected;
 			if((acceptedNormal + acceptedSpecial + rejected) == 0)
 				happinessLoss += Config.happinessLossNeglected;
-			int happinessGain = (acceptedNormal * Config.happinessGainAcceptedNormal) + (acceptedSpecial * Config.happinessGainAcceptedSpecial);
+			double happinessGain = (acceptedNormal * Config.happinessGainAcceptedNormal) + (acceptedSpecial * Config.happinessGainAcceptedSpecial);
 			
 			result[i] = happinessGain - happinessLoss;
 		}
-		
+
 		return result;
 	}
 	
 	public void processHappinessChangeOfDistricts()
 	{
-		int[] happinessChanges = calculateHappinessChangeOfDistricts();
+		double[] happinessChanges = calculateHappinessChangeOfDistricts();
 		for(int i = 0; i < happinessChanges.length; i++)
 			changeDistrictHappinessPointsByID(i,  happinessChanges[i]);
 	}
 	
-	public void changeDistrictHappinessPointsByID(int ID, int happinessChange)
+	public void changeDistrictHappinessPointsByID(int ID, double happinessChange)
 	{
 		districtHappiness[ID] = Math.max(0, Math.min(100, districtHappiness[ID] + happinessChange));
 	}
