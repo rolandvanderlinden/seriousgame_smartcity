@@ -119,12 +119,15 @@ public class EndOfRoundScreen extends AScreen
 		ComponentUtil.setComponentBounds(roundLabel, size, location);
 	}
 	
+	public AcceptanceOverviewPanel getAcceptanceOverviewPanel()
+	{
+		return this.acceptanceOverviewPanel;
+	}
 	
 	public JButton getCancelButton()
 	{
 		return this.cancelButton;
 	}
-	
 	
 	public JButton getUnlockAdvanceButton()
 	{

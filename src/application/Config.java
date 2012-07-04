@@ -21,6 +21,8 @@ public class Config
 	public final static int happinessLossRejected = 1;
 	public final static double centrumHappinessPercentage = 0.25;
 	
+	public final static String endOfRoundImagePath = "";
+	public final static String endOfRoundImageName = "End of Year ";
 	
 	//Startup data
 	public final static String[] teamNames = { "CircaCorp", "HexaTech", "QuadCore Inc" };

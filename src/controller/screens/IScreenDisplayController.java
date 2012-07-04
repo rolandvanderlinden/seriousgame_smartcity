@@ -12,4 +12,5 @@ public interface IScreenDisplayController
 	
 	//TODO Should not be in this interface.
 	public void increaseRoundNumber();
+	public int getCurrentRoundNumber();
 }

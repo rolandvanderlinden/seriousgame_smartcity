@@ -137,4 +137,10 @@ public class HZApplet extends JApplet implements IScreenDisplayController
 	{
 		this.currentRoundNumber++;
 	}
+
+	@Override
+	public int getCurrentRoundNumber()
+	{
+		return this.currentRoundNumber;
+	}
 }

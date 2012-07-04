@@ -2,6 +2,7 @@ package controller.screens;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -10,9 +11,10 @@ import model.data.AcceptanceData;
 import model.data.Team;
 import model.managers.DistrictManager;
 import model.managers.TeamManager;
-import util.Output;
+import view.panels.AcceptanceOverviewPanel;
 import view.screens.EndOfRoundScreen;
 import application.Config;
+import controller.writer.ImageWriter;
 
 public class EndOfRoundController implements ActionListener
 {
@@ -31,6 +33,16 @@ public class EndOfRoundController implements ActionListener
 		this.screen = screen;
 	}
 		
+	private void printScreen()
+	{
+		AcceptanceOverviewPanel aopanel = screen.getAcceptanceOverviewPanel();
+		
+		BufferedImage image = new BufferedImage(aopanel.getWidth(), aopanel.getHeight(), BufferedImage.TYPE_INT_RGB);
+		aopanel.paint(image.getGraphics());	
+		
+		ImageWriter.printImage(image, Config.endOfRoundImagePath, Config.endOfRoundImageName + screenDisplayController.getCurrentRoundNumber(), ".png");
+	}
+	
 	private void processRoundData()
 	{
 		//First process the happinessChanges
@@ -87,6 +99,8 @@ public class EndOfRoundController implements ActionListener
 			//Test for advance
 			else if(actioncommand.equals(advanceActionCommand))
 			{
+				printScreen();
+				
 				processRoundData();
 				
 				//Make sure that the applet starts up the end-of-round screen.
