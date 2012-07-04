@@ -73,7 +73,7 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		VectorF2 techlabelsize = new VectorF2(mediumFontMetrics.stringWidth(technologyText), 20);
 		VectorF2 improvlabelsize = new VectorF2(mediumFontMetrics.stringWidth(improvementText), 20);
 		VectorF2 quantitylabelsize = new VectorF2(mediumFontMetrics.stringWidth(quantityText), 20);
-		VectorF2 dimagesize = SizeCalculator.calculateSize(holdersize, 0.5f, 0.35f);
+		VectorF2 dimagesize = SizeCalculator.calculateSize(holdersize, 0.45f, 0.35f);
 		VectorF2 rtpanelsize = SizeCalculator.calculateSize(holdersize, 0.075f, 0.14f);
 		VectorF2 cipanelsize = rtpanelsize.clone();
 		VectorF2 offerbuttonsize = new VectorF2(150, 30);
@@ -86,7 +86,7 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		VectorF2 techlabelpos = LocationCalculator.calculateLocation(techlabelsize, holdersize, 0.125f, 0.52f);
 		VectorF2 improvlabelpos = LocationCalculator.calculateLocation(improvlabelsize, holdersize, 0.075f, 0.67f);
 		VectorF2 quantitylabelpos = LocationCalculator.calculateLocation(quantitylabelsize, holdersize, 0.13f, 0.82f);
-		VectorF2 dimagepos = LocationCalculator.calculateLocation(dimagesize, holdersize, LocationType.CENTER, 0.125f);
+		VectorF2 dimagepos = LocationCalculator.calculateLocation(dimagesize, holdersize, LocationType.CENTER, 0.11f);
 		VectorF2 firstrtpanelpos = LocationCalculator.calculateLocation(rtpanelsize, holdersize, 0.35f, 0.49f);
 		VectorF2 firstcipanelpos = LocationCalculator.calculateLocation(cipanelsize, holdersize, 0.35f, 0.64f);
 		VectorF2 offerbuttonpos = LocationCalculator.calculateLocation(offerbuttonsize, holdersize, 0.6f, 0.9f);

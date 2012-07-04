@@ -91,7 +91,7 @@ public class DistrictPanel extends TranslucentBufferedImageJPanel
 		ComponentUtil.setComponentBounds(roundOfferLabel, roundofferlabelsize, roundofferlabelpos);
 		this.roundOfferLabel.setForeground(Color.white);
 		this.roundOfferLabel.setFont(Content.mediumFont);
-		this.roundOfferLabel.setToolTipText("These are the product offers made in the current round. They will be processed when the round ends.");
+		this.roundOfferLabel.setToolTipText("These are the product introduced in the current round. They will be processed when the round ends.");
 		if(!roundOfferMapEmpty)
 			this.add(roundOfferLabel);
 		

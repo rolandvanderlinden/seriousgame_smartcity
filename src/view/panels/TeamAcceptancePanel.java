@@ -64,11 +64,13 @@ public class TeamAcceptancePanel extends TranslucentBufferedImageJPanel
 		ComponentUtil.setComponentBounds(nameLabel, namelabelsize, namelabelpos);
 		this.nameLabel.setForeground(Color.white);
 		this.nameLabel.setFont(Content.largeFont);
+		this.nameLabel.setToolTipText("An overview of the accepted and rejected products of company " + team.getName() + ".");
 		this.add(nameLabel);
 		this.fundsLabel = new JLabel(fundsLabelText);
 		ComponentUtil.setComponentBounds(fundsLabel, flabelsize, flabelpos);
 		this.fundsLabel.setForeground(Color.white);
 		this.fundsLabel.setFont(Content.mediumFont);
+		this.fundsLabel.setToolTipText("The change in funds this year from products of company " + team.getName() + ".");
 		this.add(fundsLabel);
 		this.fundsAdditionLabel = new JLabel(fundsAdditionLabelText);
 		ComponentUtil.setComponentBounds(fundsAdditionLabel, faddlabelsize, faddlabelpos);

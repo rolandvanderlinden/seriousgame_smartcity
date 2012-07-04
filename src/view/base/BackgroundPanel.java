@@ -2,10 +2,13 @@ package view.base;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FontMetrics;
 
 import javax.swing.JPanel;
 
+import model.util.VectorF2;
+import util.LocationCalculator;
+import util.SizeCalculator;
+import util.LocationCalculator.LocationType;
 import view.components.TranslucentBufferedImageJPanel;
 import content.Content;
 
@@ -15,9 +18,9 @@ public class BackgroundPanel extends JPanel
 	// Fields
 	// **********************************************
 	
-	private TranslucentBufferedImageJPanel fullbackground, leftPanel, rightPanel, upPanel, lowPanel, controlsPanel;
-	//private 
+	private TranslucentBufferedImageJPanel fullbackground, logo, leftPanel, rightPanel, upPanel, lowPanel, controlsPanel;
 	private JPanel leborder, uborder, rborder, loborder, lebar, ubar, rbar, lobar;
+	
 	
 	// **********************************************
 	// Constructor & init
@@ -36,6 +39,8 @@ public class BackgroundPanel extends JPanel
 		this.setLayout(null);
 		this.setSize(size);
 		this.setOpaque(false);
+		
+		VectorF2 holdersize = new VectorF2(size.width, size.height);
 		
 		//Define the sizes that we'll use for the gui.
 		int leftsize = 14;
@@ -122,11 +127,13 @@ public class BackgroundPanel extends JPanel
 		this.add(upPanel);
 		this.add(lowPanel);
 		
-//		//Create the prototypePanel
-//		VectorF2 ppsize = new VectorF2(width - leftsize - rightsize - (2*bordersize), height - topsize - bottomsize - (2*bordersize));
-//		this.prototypePanel = new PrototypePanel(ppsize);
-//		this.prototypePanel.setLocation(bordersize + leftsize, bordersize + topsize);
-//		this.add(this.prototypePanel);
+		//Create the logo
+		VectorF2 logosize = SizeCalculator.calculateSize(new VectorF2(700, 300), holdersize, 1.7f);
+		VectorF2 logopos = LocationCalculator.calculateLocation(logosize, holdersize, LocationType.CENTER, LocationType.CENTER);
+		this.logo = new TranslucentBufferedImageJPanel(Content.logo, 0.3f);
+		this.logo.setSize((int)logosize.x, (int)logosize.y);
+		this.logo.setLocation((int)logopos.x, (int)logopos.y);
+		this.add(this.logo);
 
 		//Create the fullbackground
 		this.fullbackground = new TranslucentBufferedImageJPanel(Content.background, 1);

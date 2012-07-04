@@ -67,12 +67,14 @@ public class DistrictAcceptancePanel extends TranslucentBufferedImageJPanel
 		ComponentUtil.setComponentBounds(nameLabel, namelabelsize, namelabelpos);
 		this.nameLabel.setForeground(Color.white);
 		this.nameLabel.setFont(Content.largeFont);
+		this.nameLabel.setToolTipText("An overview of the accepted and rejected products in district " + district.getName() + ".");
 		this.add(nameLabel);
 		this.happinessLabel = new JLabel(happinessLabelText);
 		ComponentUtil.setComponentBounds(happinessLabel, hlabelsize, hlabelpos);
 		this.happinessLabel.setForeground(Color.white);
 		this.happinessLabel.setFont(Content.mediumFont);
 		this.happinessLabel.setVisible(happinessChange != 0);
+		this.happinessLabel.setToolTipText("The change in happiness in district " + district.getName() + " over the year.");
 		this.add(happinessLabel);
 		
 		//Insert happinessImage.
@@ -83,6 +85,10 @@ public class DistrictAcceptancePanel extends TranslucentBufferedImageJPanel
 		ComponentUtil.setComponentBounds(happinessimage, himagesize, himagepos);
 		this.happinessimage.setVisible(happinessChange != 0);
 		this.add(happinessimage);
+		if(happinessChange < 0)
+			this.happinessimage.setToolTipText("The happiness in district " + district.getName() + " decreased this year.");
+		else
+			this.happinessimage.setToolTipText("The happiness in district " + district.getName() + " increased this year.");
 		
 		//Insert acceptance data panel
 		this.acceptanceCollectionPanel = new AcceptanceCollectionPanel(new Dimension((int)acceptancepsize.x, (int)acceptancepsize.y), data);

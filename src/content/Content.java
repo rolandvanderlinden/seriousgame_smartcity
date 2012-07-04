@@ -17,6 +17,7 @@ public class Content
 	public final static ResourceInfo happinessOverlay = new ResourceInfo("happinessoverlay.png", ImageRef.class);
 	public final static ResourceInfo uparrow = new ResourceInfo("uparrow.png", ImageRef.class);
 	public final static ResourceInfo downarrow = new ResourceInfo("downarrow.png", ImageRef.class);
+	public final static ResourceInfo logo = new ResourceInfo("logo.png", ImageRef.class);
 	
 	//Icons
 	public final static ResourceInfo leftArrow = new ResourceInfo("leftarrow.png", IconRef.class);

@@ -76,6 +76,7 @@ public class OverviewScreen extends AScreen
 		ComponentUtil.setComponentBounds(roundLabel, rlabelsize, rlabelpos);
 		this.roundLabel.setForeground(Color.white);
 		this.roundLabel.setFont(Content.hugeFont);
+		this.roundLabel.setToolTipText("The current year.");
 		this.add(roundLabel);
 		this.happinessLabel = new JLabel(happinessText);
 		ComponentUtil.setComponentBounds(happinessLabel, hlabelsize, hlabelpos);
@@ -88,17 +89,20 @@ public class OverviewScreen extends AScreen
 		ComponentUtil.setComponentBounds(nextRoundButton, nextbuttonsize, nextbuttonpos);
 		this.nextRoundButton.setActionCommand(OverviewController.nextRoundActionCommand);
 		this.nextRoundButton.addActionListener(overviewController);
+		this.nextRoundButton.setToolTipText("Advances the city to the next year.");
 		this.add(nextRoundButton);
 		this.unlockUndoButton = new JButton("Unlock reset");
 		ComponentUtil.setComponentBounds(unlockUndoButton, unlockundobuttonsize, unlockundobuttonpos);
 		this.unlockUndoButton.setActionCommand(OverviewController.unlockResetActionCommand);
 		this.unlockUndoButton.addActionListener(overviewController);
+		this.unlockUndoButton.setToolTipText("Unlock/Lock the reset button.");
 		this.add(unlockUndoButton);
 		this.undoRoundButton = new JButton("Reset year");
 		ComponentUtil.setComponentBounds(undoRoundButton, undobuttonsize, undobuttonpos);
 		this.undoRoundButton.setEnabled(false);
 		this.undoRoundButton.setActionCommand(OverviewController.resetRoundActionCommand);
 		this.undoRoundButton.addActionListener(overviewController);
+		this.undoRoundButton.setToolTipText("This will erase all product introductions made in the current year. Use only in emergencies.");
 		this.add(undoRoundButton);
 		
 		//Insert districtpanels
