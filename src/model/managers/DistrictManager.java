@@ -109,9 +109,9 @@ public class DistrictManager
 		for(int i = 0; i < districtHappiness.length; i++)
 		{
 			if(i == Config.centrumDistrictIndex)
-				percentage += 0.5 * districtHappiness[i];
+				percentage += (0.5 * districtHappiness[i]);
 			else
-				percentage += 0.25 * districtHappiness[i];
+				percentage += (0.25 * districtHappiness[i]);
 		}
 		
 		return percentage / 100.0;
@@ -133,7 +133,7 @@ public class DistrictManager
 	
 	public static ResourceInfo getDistrictResourceInfo(District district)
 	{
-		String imagename = district.getName() + ".jpg";
+		String imagename = district.getName() + ".png";
 		
 		return new ResourceInfo(imagename, DistrictRef.class);
 	}
