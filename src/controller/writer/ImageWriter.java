@@ -2,6 +2,9 @@ package controller.writer;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 
@@ -13,7 +16,11 @@ public class ImageWriter
 	{
 		try
 		{
-			File outputfile = new File(path + name + extension);
+			String username = System.getProperty("user.name");
+			
+			DateFormat dateFormat = new SimpleDateFormat("HH_mm_ss");
+			String time = dateFormat.format(new Date());
+			File outputfile = new File(path + name + " - " + username + " - " + time + extension);
 			ImageIO.write(image, "png", outputfile);
 		}
 		catch(Exception e)
