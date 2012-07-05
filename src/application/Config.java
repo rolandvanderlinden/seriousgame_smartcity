@@ -9,7 +9,7 @@ import java.awt.Dimension;
  */
 public class Config
 {
-	public final static String appname = "Serious Gaming SmartCity prototype";
+	public final static String appname = "Serious Gaming SmartCity - Happyzone";
 	public final static Dimension appsize = new Dimension(1100, 800);
 	public final static int outerBorderSize = 2;
 	

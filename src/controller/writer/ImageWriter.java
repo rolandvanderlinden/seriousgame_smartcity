@@ -18,9 +18,9 @@ public class ImageWriter
 		{
 			String username = System.getProperty("user.name");
 			
-			DateFormat dateFormat = new SimpleDateFormat("HH_mm_ss");
+			DateFormat dateFormat = new SimpleDateFormat("HH_mm_ss_SSS");
 			String time = dateFormat.format(new Date());
-			File outputfile = new File(path + name + " - " + username + " - " + time + extension);
+			File outputfile = new File(path + username + " - " + time + " - " + name + extension);
 			ImageIO.write(image, "png", outputfile);
 		}
 		catch(Exception e)
