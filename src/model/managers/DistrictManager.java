@@ -109,9 +109,9 @@ public class DistrictManager
 		for(int i = 0; i < districtHappiness.length; i++)
 		{
 			if(i == Config.centrumDistrictIndex)
-				percentage += 0.4 * districtHappiness[i];
+				percentage += 0.5 * districtHappiness[i];
 			else
-				percentage += 0.3 * districtHappiness[i];
+				percentage += 0.25 * districtHappiness[i];
 		}
 		
 		return percentage / 100.0;

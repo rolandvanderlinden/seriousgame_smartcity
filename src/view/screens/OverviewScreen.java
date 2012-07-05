@@ -85,7 +85,7 @@ public class OverviewScreen extends AScreen
 		this.add(happinessLabel);
 		
 		//Insert buttons
-		this.nextRoundButton = new JButton("Next year");
+		this.nextRoundButton = new JButton("End of year " + this.roundNumber);
 		ComponentUtil.setComponentBounds(nextRoundButton, nextbuttonsize, nextbuttonpos);
 		this.nextRoundButton.setActionCommand(OverviewController.nextRoundActionCommand);
 		this.nextRoundButton.addActionListener(overviewController);

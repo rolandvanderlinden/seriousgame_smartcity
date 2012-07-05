@@ -18,8 +18,7 @@ public class Config
 	public final static int happinessGainAcceptedNormal = 4;
 	public final static int happinessGainAcceptedSpecial = 5;
 	public final static int happinessLossNeglected = 5;
-	public final static int happinessLossRejected = 1;
-	public final static double centrumHappinessPercentage = 0.25;
+	public final static int happinessLossRejected = 2;
 	
 	public final static String endOfRoundImagePath = "";
 	public final static String endOfRoundImageName = "End of Year ";

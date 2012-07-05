@@ -47,7 +47,7 @@ public class DistrictAcceptancePanel extends TranslucentBufferedImageJPanel
 		
 		//Text
 		String nameLabelText = "District: " + district.getName();
-		String happinessLabelText = "Happiness change";
+		String happinessLabelText = "Happiness";
 
 		//Sizes
 		VectorF2 holdersize = new VectorF2(size.width, size.height);
@@ -59,7 +59,7 @@ public class DistrictAcceptancePanel extends TranslucentBufferedImageJPanel
 		//Locations
 		VectorF2 namelabelpos = LocationCalculator.calculateLocation(namelabelsize, holdersize, LocationType.CENTER, 0.05f);
 		VectorF2 hlabelpos = LocationCalculator.calculateLocation(hlabelsize, holdersize, LocationType.CENTER, 0.85f);
-		VectorF2 himagepos = LocationCalculator.calculateLocation(himagesize, holdersize, 0.74f, 0.85f);
+		VectorF2 himagepos = LocationCalculator.calculateLocation(himagesize, holdersize, 0.7f, 0.85f);
 		VectorF2 acceptanceppos = LocationCalculator.calculateLocation(acceptancepsize, holdersize, LocationType.CENTER, 0.16f);
 	
 		//Insert labels

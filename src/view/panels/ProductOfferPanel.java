@@ -17,6 +17,7 @@ import model.util.VectorF2;
 import util.ComponentUtil;
 import util.LocationCalculator;
 import util.LocationCalculator.LocationType;
+import util.Output;
 import util.SizeCalculator;
 import view.components.BufferedImageJPanel;
 import view.components.TranslucentBufferedImageJPanel;
@@ -73,7 +74,7 @@ public class ProductOfferPanel extends TranslucentBufferedImageJPanel
 		VectorF2 techlabelsize = new VectorF2(mediumFontMetrics.stringWidth(technologyText), 20);
 		VectorF2 improvlabelsize = new VectorF2(mediumFontMetrics.stringWidth(improvementText), 20);
 		VectorF2 quantitylabelsize = new VectorF2(mediumFontMetrics.stringWidth(quantityText), 20);
-		VectorF2 dimagesize = SizeCalculator.calculateSize(holdersize, 0.45f, 0.35f);
+		VectorF2 dimagesize = SizeCalculator.calculateSize(holdersize, 0.375f, 0.35f);
 		VectorF2 rtpanelsize = SizeCalculator.calculateSize(holdersize, 0.075f, 0.14f);
 		VectorF2 cipanelsize = rtpanelsize.clone();
 		VectorF2 offerbuttonsize = new VectorF2(150, 30);

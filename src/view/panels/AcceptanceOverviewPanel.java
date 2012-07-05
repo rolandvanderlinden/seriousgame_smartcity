@@ -71,12 +71,12 @@ public class AcceptanceOverviewPanel extends JPanel
 		//Insert labels
 		this.districtLabel = new JLabel(districtLabelText);
 		ComponentUtil.setComponentBounds(districtLabel, dlabelsize, dlabelpos);
-		this.districtLabel.setForeground(Color.green);
+		this.districtLabel.setForeground(Color.white);
 		this.districtLabel.setFont(Content.hugeBoldFont);
 		this.add(districtLabel);
 		this.teamLabel = new JLabel(teamLabelText);
 		ComponentUtil.setComponentBounds(teamLabel, tlabelsize, tlabelpos);
-		this.teamLabel.setForeground(Color.green);
+		this.teamLabel.setForeground(Color.white);
 		this.teamLabel.setFont(Content.hugeBoldFont);
 		this.add(teamLabel);
 		
